@@ -4,78 +4,60 @@ import "./Projects.css"
 function Projects() {
   return (
     <section className="projects" id="projects">
-
       <div className="projects-header">
         <p className="section-kicker">Selected Work</p>
 
         <h2>
-          Projects with a focus on learning,
-          interaction and immersive presentation.
+          Projects with a focus on learning, interaction and immersive
+          presentation.
         </h2>
       </div>
 
       <div className="project-grid">
-
         {projects.map((project) => (
-
-          <div className="project-card" key={project.title}>
-
+          <article className="project-card" key={project.title}>
             <div>
+              <p className="project-type">{project.type}</p>
 
-              <p className="project-type">
-                {project.type}
-              </p>
+              <h3>{project.title}</h3>
 
-              <h3>
-                {project.title}
-              </h3>
-
-              <p>
-                {project.description}
-              </p>
-
+              <p>{project.description}</p>
             </div>
 
             <div>
-
               <div className="project-tags">
-
                 {project.tags.map((tag) => (
-                  <span key={tag}>
-                    {tag}
-                  </span>
+                  <span key={tag}>{tag}</span>
                 ))}
-
               </div>
 
               <div className="project-links">
+                {project.live && (
+                  <a
+                    href={project.live}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Open live site for ${project.title}`}
+                  >
+                    ↗ Live Site
+                  </a>
+                )}
 
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  Live Site
-                </a>
-
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  GitHub
-                </a>
-
+                {project.repo && (
+                  <a
+                    href={project.repo}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`Open GitHub repository for ${project.title}`}
+                  >
+                    ↗ GitHub
+                  </a>
+                )}
               </div>
-
             </div>
-
-          </div>
-
+          </article>
         ))}
-
       </div>
-
     </section>
   )
 }

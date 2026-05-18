@@ -1,26 +1,21 @@
-import "./Hero.css"
-import portrait from "../../assets/images/lotus_blk&wht.png"
+import "./Hero.css";
 
 function Hero() {
   return (
     <section className="hero">
-
       <div className="hero-content">
-
         <div className="hero-text">
-          <p className="hero-tag">
-            Frontend Developer • Creative Technology
-          </p>
+          <p className="hero-tag">Frontend Developer • Creative Technology</p>
 
           <h1>
-            Building atmospheric frontend experiences
-            with a growing focus on interactive web.
+            Building atmospheric frontend experiences with a growing focus on
+            interactive web.
           </h1>
 
           <p className="hero-description">
-            Exploring immersive interfaces, educational tools,
-            realtime visuals and lightweight WebGL experiences
-            using React and modern frontend technologies.
+            Exploring immersive interfaces, educational tools, realtime visuals
+            and lightweight WebGL experiences using React and modern frontend
+            technologies.
           </p>
 
           <div className="hero-links">
@@ -28,21 +23,18 @@ function Hero() {
             <a href="#">LinkedIn</a>
             <a href="#projects">Projects</a>
           </div>
-
         </div>
 
         <div className="hero-image-wrapper">
           <img
-            src={portrait}
+            src="/images/lotus-bw.png"
             alt="Lotus Tay portrait"
             className="hero-image"
           />
         </div>
-
       </div>
-
     </section>
-  )
+  );
 }
 
-export default Hero
+export default Hero;
