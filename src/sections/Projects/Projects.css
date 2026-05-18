@@ -1,0 +1,135 @@
+.projects {
+  background: #050505;
+  color: #f5f5f5;
+  padding: 8rem 6vw;
+}
+
+.projects-header {
+  max-width: 900px;
+  margin-bottom: 4rem;
+}
+
+.section-kicker,
+.project-type {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8d8d8d;
+}
+
+.projects h2 {
+  font-size: clamp(2.2rem, 5vw, 4.8rem);
+  line-height: 1;
+  max-width: 900px;
+  margin-top: 1rem;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #202020;
+}
+
+.project-card {
+  min-height: 360px;
+  padding: 2rem;
+  background: #080808;
+  color: inherit;
+  text-decoration: none;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.project-card:hover {
+  background: #111;
+  transform: translateY(-4px);
+}
+
+.project-card h3 {
+  font-size: 2rem;
+  line-height: 1;
+  margin: 1.5rem 0;
+}
+
+.project-card p {
+  color: #b5b5b5;
+  line-height: 1.6;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.project-tags span {
+  border: 1px solid #333;
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.75rem;
+  color: #aaa;
+}
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.project-links {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.project-links a {
+  font-size: 0.95rem;
+  color: #d0d0d0;
+  text-decoration: none;
+  position: relative;
+
+  display: inline-block;
+  padding-bottom: 0.2rem;
+
+  transition: color 0.3s ease;
+}
+
+.project-links a::after {
+  content: "";
+
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 1px;
+
+  background: #444;
+
+  transition: background 0.3s ease;
+}
+
+.project-links a:hover {
+  color: white;
+}
+
+.project-links a:hover::after {
+  background: white;
+}
+
+@media (max-width: 900px) {
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .projects {
+    padding: 5rem 1.5rem;
+  }
+}
