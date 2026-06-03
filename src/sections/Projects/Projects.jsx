@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { client } from "../../SanityClient";
+import { client } from "../../sanityClient";
 import "./Projects.css";
 
 function Projects() {
