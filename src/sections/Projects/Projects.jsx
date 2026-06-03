@@ -1,7 +1,27 @@
-import { projects } from "../../data/projects"
-import "./Projects.css"
+import { useEffect, useState } from "react";
+import { client } from "../../SanityClient";
+import "./Projects.css";
 
 function Projects() {
+  const [sanityProjects, setSanityProjects] = useState([]);
+
+  useEffect(() => {
+    client
+      .fetch(
+        `*[_type == "project"]{
+      title,
+      type,
+      description,
+      tags,
+      projectUrl,
+      repo,
+      featured
+    }`,
+      )
+      .then((data) => setSanityProjects(data))
+      .catch(console.error);
+  }, []);
+
   return (
     <section className="projects" id="projects">
       <div className="projects-header">
@@ -14,7 +34,7 @@ function Projects() {
       </div>
 
       <div className="project-grid">
-        {projects.map((project) => (
+        {sanityProjects.map((project) => (
           <article className="project-card" key={project.title}>
             <div>
               <p className="project-type">{project.type}</p>
@@ -26,15 +46,19 @@ function Projects() {
 
             <div>
               <div className="project-tags">
-                {project.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
+                <div className="project-tags">
+                  {project.tags?.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+
+                <div className="project-links">...</div>
               </div>
 
               <div className="project-links">
-                {project.live && (
+                {(project.live || project.projectUrl) && (
                   <a
-                    href={project.live}
+                    href={project.live || project.projectUrl}
                     target="_blank"
                     rel="noreferrer"
                     aria-label={`Open live site for ${project.title}`}
@@ -59,7 +83,7 @@ function Projects() {
         ))}
       </div>
     </section>
-  )
+  );
 }
 
-export default Projects
+export default Projects;
