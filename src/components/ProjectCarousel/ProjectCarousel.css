@@ -55,7 +55,6 @@
 }
 
 .carousel-card p {
-  color: #b5b5b5;
   line-height: 1.6;
 }
 
@@ -70,6 +69,18 @@
 
 .carousel-track.is-dragging a {
   pointer-events: none;
+}
+
+.carousel-card p,
+.carousel-card h3,
+.carousel-card a,
+.carousel-card .project-type {
+  color: inherit;
+}
+
+.project-tags span {
+  color: inherit;
+  border-color: currentColor;
 }
 
 @media (max-width: 700px) {

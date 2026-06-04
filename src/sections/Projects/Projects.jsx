@@ -20,8 +20,11 @@ function Projects() {
           repo,
           featured,
           cardBackgroundColor {
-          hex
-        }
+            hex
+          }
+          cardTextColor {
+            hex
+          }
         }`,
       )
       .then((data) => setSanityProjects(data))

@@ -40,6 +40,22 @@ export default {
       type: 'color',
     },
     {
+      name: 'cardTextColor',
+      title: 'Card Text Color',
+      type: 'color'
+    },  
+    {
+      name: 'cardBackgroundColor',
+      title: 'Card Background Color',
+      type: 'color',
+    },
+    {
+      name: 'cardTextColor',
+      title: 'Card Text Color',
+      type: 'color',
+      description: 'Optional. Leave blank to auto-adjust text colour based on background.',
+    },
+    {
       name: 'featured',
       title: 'Featured',
       type: 'boolean',

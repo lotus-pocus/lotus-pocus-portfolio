@@ -7,6 +7,19 @@ function ProjectCarousel({ projects }) {
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
 
+  const getContrastColor = (hex) => {
+    if (!hex) return "#f5f5f5";
+
+    const color = hex.replace("#", "");
+    const r = parseInt(color.substring(0, 2), 16);
+    const g = parseInt(color.substring(2, 4), 16);
+    const b = parseInt(color.substring(4, 6), 16);
+
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+
+    return brightness > 160 ? "#111111" : "#f5f5f5";
+  };
+
   const scrollCarousel = (direction) => {
     if (!carouselRef.current) return;
 
@@ -42,17 +55,11 @@ function ProjectCarousel({ projects }) {
   return (
     <div className="project-carousel">
       <div className="carousel-controls">
-        <button
-          onClick={() => scrollCarousel("prev")}
-          aria-label="Previous project"
-        >
+        <button onClick={() => scrollCarousel("prev")} aria-label="Previous project">
           ←
         </button>
 
-        <button
-          onClick={() => scrollCarousel("next")}
-          aria-label="Next project"
-        >
+        <button onClick={() => scrollCarousel("next")} aria-label="Next project">
           →
         </button>
       </div>
@@ -65,41 +72,48 @@ function ProjectCarousel({ projects }) {
         onMouseUp={stopDragging}
         onMouseLeave={stopDragging}
       >
-        {projects.map((project) => (
-          <article
-            className="carousel-card"
-            key={project.title}
-            style={{
-              backgroundColor: project.cardBackgroundColor?.hex || "#080808",
-            }}
-          >
-            <p className="project-type">{project.type}</p>
+        {projects.map((project) => {
+          const backgroundColor = project.cardBackgroundColor?.hex || "#080808";
+          const textColor =
+            project.cardTextColor?.hex || getContrastColor(backgroundColor);
 
-            <h3>{project.title}</h3>
+          return (
+            <article
+              className="carousel-card"
+              key={project.title}
+              style={{
+                backgroundColor,
+                color: textColor,
+              }}
+            >
+              <p className="project-type">{project.type}</p>
 
-            <p>{project.description}</p>
+              <h3>{project.title}</h3>
 
-            <div className="project-tags">
-              {project.tags?.map((tag) => (
-                <span key={tag}>{tag}</span>
-              ))}
-            </div>
+              <p>{project.description}</p>
 
-            <div className="project-links">
-              {project.projectUrl && (
-                <a href={project.projectUrl} target="_blank" rel="noreferrer">
-                  ↗ Live Site
-                </a>
-              )}
+              <div className="project-tags">
+                {project.tags?.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
 
-              {project.repo && (
-                <a href={project.repo} target="_blank" rel="noreferrer">
-                  ↗ GitHub
-                </a>
-              )}
-            </div>
-          </article>
-        ))}
+              <div className="project-links">
+                {project.projectUrl && (
+                  <a href={project.projectUrl} target="_blank" rel="noreferrer">
+                    ↗ Live Site
+                  </a>
+                )}
+
+                {project.repo && (
+                  <a href={project.repo} target="_blank" rel="noreferrer">
+                    ↗ GitHub
+                  </a>
+                )}
+              </div>
+            </article>
+          );
+        })}
       </div>
     </div>
   );
