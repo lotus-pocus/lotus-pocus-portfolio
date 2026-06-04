@@ -7,10 +7,7 @@ function Hero() {
         <div className="hero-text">
           <p className="hero-tag">Frontend Developer • Creative Technology</p>
 
-          <h1>
-            Building atmospheric frontend experiences with a growing focus on
-            interactive web.
-          </h1>
+          <h1>Lotus Pocus - Sanity Test</h1>
 
           <p className="hero-description">
             Exploring immersive interfaces, educational tools, realtime visuals
