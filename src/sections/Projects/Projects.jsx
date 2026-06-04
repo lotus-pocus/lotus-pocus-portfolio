@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { client } from "../../sanityClient";
 import Accordion from "../../components/Accordion/Accordion";
+import ProjectCarousel from "../../components/ProjectCarousel/ProjectCarousel";
 import "./Projects.css";
 
 function Projects() {
@@ -17,7 +18,10 @@ function Projects() {
           tags,
           projectUrl,
           repo,
-          featured
+          featured,
+          cardBackgroundColor {
+          hex
+        }
         }`,
       )
       .then((data) => setSanityProjects(data))
@@ -52,54 +56,21 @@ function Projects() {
           title={siteSettings?.projectsAccordionTitle}
           content={siteSettings?.projectsAccordionContent}
         />
-
       </div>
 
-      <div className="project-grid">
-        {sanityProjects.map((project) => (
-          <article className="project-card" key={project.title}>
-            <div>
-              <p className="project-type">{project.type}</p>
-              <h3>{project.title}</h3>
-              <p>{project.description}</p>
-            </div>
+      <ProjectCarousel projects={sanityProjects} />
+      {siteSettings?.ContactCTA && siteSettings?.ContactCTAButtonLabel && (
+        <div className="projects-cta">
+          <p>{siteSettings.ContactCTA}</p>
 
-            <div>
-              <div className="project-tags">
-                {project.tags?.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
-              </div>
-
-              <div className="project-links">
-                {project.projectUrl && (
-                  <a href={project.projectUrl} target="_blank" rel="noreferrer">
-                    ↗ Live Site
-                  </a>
-                )}
-
-                {project.repo && (
-                  <a href={project.repo} target="_blank" rel="noreferrer">
-                    ↗ GitHub
-                  </a>
-                )}
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
-        {siteSettings?.ContactCTA && siteSettings?.ContactCTAButtonLabel && (
-          <div className="projects-cta">
-            <p>{siteSettings.ContactCTA}</p>
-
-            <a
-              href={`mailto:${siteSettings.contactEmail}`}
-              className="projects-cta-button"
-            >
-              {siteSettings.ContactCTAButtonLabel}
-            </a>
-          </div>
-        )}
+          <a
+            href={`mailto:${siteSettings.contactEmail}`}
+            className="projects-cta-button"
+          >
+            {siteSettings.ContactCTAButtonLabel}
+          </a>
+        </div>
+      )}
     </section>
   );
 }

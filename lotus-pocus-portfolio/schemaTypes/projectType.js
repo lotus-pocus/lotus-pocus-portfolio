@@ -22,7 +22,7 @@ export default {
       name: 'tags',
       title: 'Tags',
       type: 'array',
-      of: [{ type: 'string' }],
+      of: [{type: 'string'}],
     },
     {
       name: 'projectUrl',
@@ -33,6 +33,11 @@ export default {
       name: 'repo',
       title: 'Repository URL',
       type: 'url',
+    },
+    {
+      name: 'cardBackgroundColor',
+      title: 'Card Background Color',
+      type: 'color',
     },
     {
       name: 'featured',
