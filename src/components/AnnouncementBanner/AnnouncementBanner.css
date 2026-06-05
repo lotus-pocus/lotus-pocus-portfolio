@@ -1,0 +1,53 @@
+.announcement-banner {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  position: relative;
+  z-index: 1000;
+  overflow: hidden;
+}
+
+.announcement-content {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.announcement-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+
+.announcement-banner--ticker {
+  padding-left: 0;
+  padding-right: 0;
+  white-space: nowrap;
+}
+
+.announcement-ticker {
+  overflow: hidden;
+  width: 100%;
+}
+
+.announcement-ticker-track {
+  display: inline-flex;
+  gap: 4rem;
+  min-width: max-content;
+  animation: announcementTicker 24s linear infinite;
+}
+
+.announcement-ticker-track span {
+  display: inline-block;
+}
+
+@keyframes announcementTicker {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}

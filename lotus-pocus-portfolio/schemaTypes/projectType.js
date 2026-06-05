@@ -33,17 +33,7 @@ export default {
       name: 'repo',
       title: 'Repository URL',
       type: 'url',
-    },
-    {
-      name: 'cardBackgroundColor',
-      title: 'Card Background Color',
-      type: 'color',
-    },
-    {
-      name: 'cardTextColor',
-      title: 'Card Text Color',
-      type: 'color'
-    },  
+    }, 
     {
       name: 'cardBackgroundColor',
       title: 'Card Background Color',
