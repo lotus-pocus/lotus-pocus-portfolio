@@ -27,19 +27,38 @@ function Projects() {
           }
         }`,
       )
-      .then((data) => setSanityProjects(data))
+      .then((data) => {
+        console.log("Sanity projects:", data);
+        setSanityProjects(data);
+      })
       .catch(console.error);
 
     client
       .fetch(
         `*[_type == "siteSettings"][0]{
-          projectsAccordionTitle,
-          projectsAccordionContent,
-          ContactCTA,
-          ContactCTAButtonLabel,
-          contactEmail,
-          GoogleMapsURL
-        }`,
+      projectsAccordionTitle,
+      projectsAccordionContent,
+      ContactCTA,
+      ContactCTAButtonLabel,
+      contactEmail,
+      GoogleMapsURL,
+
+      heroBackgroundColor {
+        hex
+      },
+      projectsBackgroundColor {
+        hex
+      },
+      experimentsBackgroundColor {
+        hex
+      },
+      aboutBackgroundColor {
+        hex
+      },
+      contactBackgroundColor {
+        hex
+      }
+    }`,
       )
       .then((data) => setSiteSettings(data))
       .catch(console.error);

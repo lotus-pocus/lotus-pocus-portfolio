@@ -30,13 +30,15 @@ function ProjectCarousel({ projects }) {
   };
 
   const handleMouseDown = (e) => {
+    if (!carouselRef.current) return;
+
     setIsDragging(true);
     setStartX(e.pageX - carouselRef.current.offsetLeft);
     setScrollLeft(carouselRef.current.scrollLeft);
   };
 
   const handleMouseMove = (e) => {
-    if (!isDragging) return;
+    if (!isDragging || !carouselRef.current) return;
 
     e.preventDefault();
 
@@ -55,11 +57,17 @@ function ProjectCarousel({ projects }) {
   return (
     <div className="project-carousel">
       <div className="carousel-controls">
-        <button onClick={() => scrollCarousel("prev")} aria-label="Previous project">
+        <button
+          onClick={() => scrollCarousel("prev")}
+          aria-label="Previous project"
+        >
           ←
         </button>
 
-        <button onClick={() => scrollCarousel("next")} aria-label="Next project">
+        <button
+          onClick={() => scrollCarousel("next")}
+          aria-label="Next project"
+        >
           →
         </button>
       </div>
@@ -100,13 +108,23 @@ function ProjectCarousel({ projects }) {
 
               <div className="project-links">
                 {project.projectUrl && (
-                  <a href={project.projectUrl} target="_blank" rel="noreferrer">
+                  <a
+                    href={project.projectUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    onMouseDown={(e) => e.stopPropagation()}
+                  >
                     ↗ Live Site
                   </a>
                 )}
 
                 {project.repo && (
-                  <a href={project.repo} target="_blank" rel="noreferrer">
+                  <a
+                    href={project.repo}
+                    target="_blank"
+                    rel="noreferrer"
+                    onMouseDown={(e) => e.stopPropagation()}
+                  >
                     ↗ GitHub
                   </a>
                 )}

@@ -55,6 +55,31 @@ export default {
       name: 'GoogleMapsURL', 
       title: 'Google Maps URL', 
       type: 'url',
-    }
+    },
+    {
+  name: 'heroBackgroundColor',
+  title: 'Hero Background Colour',
+  type: 'color'
+},
+{
+  name: 'projectsBackgroundColor',
+  title: 'Projects Background Colour',
+  type: 'color'
+},
+{
+  name: 'experimentsBackgroundColor',
+  title: 'Experiments Background Colour',
+  type: 'color'
+},
+{
+  name: 'aboutBackgroundColor',
+  title: 'About Background Colour',
+  type: 'color'
+},
+{
+  name: 'contactBackgroundColor',
+  title: 'Contact Background Colour',
+  type: 'color'
+}
   ],
 }

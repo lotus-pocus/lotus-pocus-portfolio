@@ -1,9 +1,9 @@
 .search-box {
-  position: fixed;
-  top: 4.5rem;
-  right: 2rem;
+  position: absolute;
+  top: 5rem;
+  right: 12rem;
   width: min(360px, calc(100vw - 2rem));
-  z-index: 2000;
+  z-index: 2500;
 }
 
 .search-box input {
