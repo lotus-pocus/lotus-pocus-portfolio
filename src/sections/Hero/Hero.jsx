@@ -21,6 +21,9 @@ function Hero() {
       url
     }
   }
+  heroBackgroundColor {
+    hex
+  } 
 }`,
       )
       .then((data) => setSiteSettings(data))
@@ -28,7 +31,12 @@ function Hero() {
   }, []);
 
   return (
-    <section className="hero">
+    <section
+      className="hero"
+      style={{
+        backgroundColor: siteSettings?.heroBackgroundColor?.hex || "#050505",
+      }}
+    >
       <div className="hero-content">
         <div className="hero-text">
           <p className="hero-tag">
