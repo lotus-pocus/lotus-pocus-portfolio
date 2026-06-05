@@ -65,7 +65,14 @@ function Projects() {
   }, []);
 
   return (
-    <section className="projects" id="projects">
+    <section
+      className="projects"
+      id="projects"
+      style={{
+        backgroundColor:
+          siteSettings?.projectsBackgroundColor?.hex || "#050505",
+      }}
+    >
       <div className="projects-header">
         <p className="section-kicker">Selected Work</p>
 
