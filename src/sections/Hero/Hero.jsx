@@ -9,22 +9,22 @@ function Hero() {
     client
       .fetch(
         `*[_type == "siteSettings"][0]{
-  siteTitle,
-  contactEmail,
-  githubUrl,
-  linkedinUrl,
-  instagramUrl,
-  heroHeading,
-  heroDescription,
-  heroImage{
-    asset->{
-      url
-    }
-  },
-  heroBackgroundColor {
-    hex
-  } 
-}`,
+          siteTitle,
+          contactEmail,
+          githubUrl,
+          linkedinUrl,
+          instagramUrl,
+          heroHeading,
+          heroDescription,
+          heroImage{
+            asset->{
+              url
+            }
+          },
+          heroBackgroundColor {
+            hex
+          }
+        }`,
       )
       .then((data) => setSiteSettings(data))
       .catch(console.error);
@@ -40,13 +40,18 @@ function Hero() {
       <div className="hero-content">
         <div className="hero-text">
           <p className="hero-tag">
-            {siteSettings?.siteTitle ||
-              "Frontend Developer • Creative Technology"}
+            {siteSettings?.siteTitle || "LOTUS POCUS"}
           </p>
 
-          <h1>{siteSettings?.heroHeading}</h1>
+          <h1>
+            {siteSettings?.heroHeading ||
+              "Building atmospheric frontend experiences with a growing focus on interactive web."}
+          </h1>
 
-          <p className="hero-description">{siteSettings?.heroDescription}</p>
+          <p className="hero-description">
+            {siteSettings?.heroDescription ||
+              "Exploring frontend web design, immersive interfaces, educational tools, realtime visuals and lightweight WebGL experiences using React and modern frontend technologies."}
+          </p>
 
           <div className="hero-links">
             {siteSettings?.githubUrl && (
@@ -56,11 +61,7 @@ function Hero() {
             )}
 
             {siteSettings?.linkedinUrl && (
-              <a
-                href={siteSettings.linkedinUrl}
-                target="_blank"
-                rel="noreferrer"
-              >
+              <a href={siteSettings.linkedinUrl} target="_blank" rel="noreferrer">
                 LinkedIn
               </a>
             )}
@@ -69,13 +70,15 @@ function Hero() {
           </div>
         </div>
 
-        <div className="hero-image-wrapper">
-          <img
-            src={siteSettings?.heroImage?.asset?.url}
-            alt="Lotus Tay portrait"
-            className="hero-image"
-          />
-        </div>
+        {siteSettings?.heroImage?.asset?.url && (
+          <div className="hero-image-wrapper">
+            <img
+              src={siteSettings.heroImage.asset.url}
+              alt="Lotus Tay portrait"
+              className="hero-image"
+            />
+          </div>
+        )}
       </div>
     </section>
   );
