@@ -20,7 +20,7 @@ function Hero() {
     asset->{
       url
     }
-  }
+  },
   heroBackgroundColor {
     hex
   } 
