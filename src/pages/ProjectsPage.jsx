@@ -18,7 +18,15 @@ function ProjectImages({ images, title, section }) {
   );
 }
 
-function CaseStudySection({ heading, text, images, title, section, reverse, layout }) {
+function CaseStudySection({
+  heading,
+  text,
+  images,
+  title,
+  section,
+  reverse,
+  layout,
+}) {
   const hasImages = images && images.length > 0;
 
   return (
@@ -50,7 +58,9 @@ function ProjectsPage() {
   useEffect(() => {
     client
       .fetch(`
-        *[_type == "project"] | order(displayOrder asc){
+        *[_type == "project" && !(_id in path("versions.**"))]
+        | order(coalesce(displayOrder, 9999) asc, title asc){
+          _id,
           title,
           slug,
           type,
@@ -103,10 +113,7 @@ function ProjectsPage() {
       <h1>Projects</h1>
 
       {projects.map((project) => (
-        <article
-          className="project-case"
-          key={project.slug?.current || project.title}
-        >
+        <article className="project-case" key={project._id}>
           {project.mainImage?.asset?.url && (
             <img
               className="project-main-image"
