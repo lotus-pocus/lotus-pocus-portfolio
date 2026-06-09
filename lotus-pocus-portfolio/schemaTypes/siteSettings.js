@@ -42,44 +42,116 @@ export default {
       type: 'text',
     },
     {
-      name: 'ContactCTA', 
-      title: 'Contact CTA', 
+      name: 'ContactCTA',
+      title: 'Contact CTA',
       type: 'text',
     },
     {
-      name: 'ContactCTAButtonLabel', 
-      title: 'Contact CTA Button Label', 
+      name: 'ContactCTAButtonLabel',
+      title: 'Contact CTA Button Label',
       type: 'string',
     },
     {
-      name: 'GoogleMapsURL', 
-      title: 'Google Maps URL', 
+      name: 'GoogleMapsURL',
+      title: 'Google Maps URL',
       type: 'url',
     },
     {
-  name: 'heroBackgroundColor',
-  title: 'Hero Background Colour',
-  type: 'color'
-},
-{
-  name: 'projectsBackgroundColor',
-  title: 'Projects Background Colour',
-  type: 'color'
-},
-{
-  name: 'experimentsBackgroundColor',
-  title: 'Experiments Background Colour',
-  type: 'color'
-},
-{
-  name: 'aboutBackgroundColor',
-  title: 'About Background Colour',
-  type: 'color'
-},
-{
-  name: 'contactBackgroundColor',
-  title: 'Contact Background Colour',
-  type: 'color'
-}
+      name: 'heroBackgroundColor',
+      title: 'Hero Background Colour',
+      type: 'color',
+    },
+    {
+      name: 'projectsBackgroundColor',
+      title: 'Projects Background Colour',
+      type: 'color',
+    },
+    {
+      name: 'experimentsBackgroundColor',
+      title: 'Experiments Background Colour',
+      type: 'color',
+    },
+    {
+      name: 'aboutBackgroundColor',
+      title: 'About Background Colour',
+      type: 'color',
+    },
+    {
+      name: 'contactBackgroundColor',
+      title: 'Contact Background Colour',
+      type: 'color',
+    },
+    {
+      name: 'projectsPageBackgroundColor',
+      title: 'Projects Page Background Color',
+      type: 'color',
+    },
+    {
+      name: 'defaultMetaTitle',
+      title: 'Default Meta Title',
+      type: 'string',
+    },
+    {
+      name: 'defaultMetaDescription',
+      title: 'Default Meta Description',
+      type: 'text',
+      validation: (Rule) => Rule.max(160),
+    },
+    {
+      name: 'defaultSocialImage',
+      title: 'Default Social Share Image',
+      type: 'image',
+      description: 'Recommended: 1200×630 JPG/PNG for social previews.',
+      options: {hotspot: true},
+    },
+    {
+      name: 'projectsPageMetaTitle',
+      title: 'Projects Page Meta Title',
+      type: 'string',
+    },
+    {
+      name: 'projectsPageMetaDescription',
+      title: 'Projects Page Meta Description',
+      type: 'text',
+      validation: (Rule) => Rule.max(160),
+    },
+    {
+      name: 'aboutPageMetaTitle',
+      title: 'About Page Meta Title',
+      type: 'string',
+    },
+    {
+      name: 'aboutPageMetaDescription',
+      title: 'About Page Meta Description',
+      type: 'text',
+      validation: (Rule) => Rule.max(160),
+    },
+    {
+      name: 'contactPageMetaTitle',
+      title: 'Contact Page Meta Title',
+      type: 'string',
+    },
+    {
+      name: 'contactPageMetaDescription',
+      title: 'Contact Page Meta Description',
+      type: 'text',
+      validation: (Rule) => Rule.max(160),
+    },
+    {
+      name: 'insightsPageMetaTitle',
+      title: 'Insights Page Meta Title',
+      type: 'string',
+    },
+    {
+      name: 'insightsPageMetaDescription',
+      title: 'Insights Page Meta Description',
+      type: 'text',
+      validation: (Rule) => Rule.max(160),
+    },
+    {
+      name: 'siteUrl',
+      title: 'Site URL',
+      type: 'url',
+    },
   ],
 }
