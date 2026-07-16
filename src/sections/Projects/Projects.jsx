@@ -12,7 +12,9 @@ function Projects() {
     client
       .fetch(
         `*[_type == "project"]{
+          _id,
           title,
+          "slug": slug.current,
           type,
           description,
           tags,

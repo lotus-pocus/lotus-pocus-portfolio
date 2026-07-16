@@ -26,3 +26,11 @@ img {
   display: block;
   max-width: 100%;
 }
+
+h1,
+h2 {
+  font-family: "Tiempos Headline", Georgia, serif;
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}

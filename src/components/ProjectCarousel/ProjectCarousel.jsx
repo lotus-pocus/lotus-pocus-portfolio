@@ -88,7 +88,7 @@ function ProjectCarousel({ projects }) {
           return (
             <article
               className="carousel-card"
-              key={project.title}
+              key={project._id}
               style={{
                 backgroundColor,
                 color: textColor,
@@ -107,6 +107,16 @@ function ProjectCarousel({ projects }) {
               </div>
 
               <div className="project-links">
+                {project.slug && (
+                  <a
+                    href={`/projects#${project.slug}`}
+                    onMouseDown={(e) => e.stopPropagation()}
+                    aria-label={`View case study for ${project.title}`}
+                  >
+                    Case study →
+                  </a>
+                )}
+
                 {project.projectUrl && (
                   <a
                     href={project.projectUrl}

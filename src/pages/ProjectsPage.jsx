@@ -35,8 +35,8 @@ function CaseStudySection({
         layout === "gallery"
           ? "gallery-layout"
           : hasImages
-          ? "split"
-          : "full-width"
+            ? "split"
+            : "full-width"
       } ${reverse ? "reverse" : ""}`}
     >
       <div className="project-copy">
@@ -57,12 +57,13 @@ function ProjectsPage() {
 
   useEffect(() => {
     client
-      .fetch(`
+      .fetch(
+        `
         *[_type == "project" && !(_id in path("versions.**"))]
         | order(coalesce(displayOrder, 9999) asc, title asc){
           _id,
           title,
-          slug,
+          "slug": slug.current,
           type,
           description,
           caseStudyIntro,
@@ -86,21 +87,38 @@ function ProjectsPage() {
             asset->{ url }
           }
         }
-      `)
+      `,
+      )
       .then((data) => setProjects(data))
       .catch(console.error);
 
     client
-      .fetch(`
+      .fetch(
+        `
         *[_type == "siteSettings"][0]{
           projectsPageBackgroundColor{
             hex
           }
         }
-      `)
+      `,
+      )
       .then((data) => setSiteSettings(data))
       .catch(console.error);
   }, []);
+
+  useEffect(() => {
+    if (projects.length === 0 || !window.location.hash) return;
+
+    const slug = window.location.hash.slice(1);
+    const projectSection = document.getElementById(slug);
+
+    if (projectSection) {
+      projectSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [projects]);
 
   return (
     <main
@@ -113,7 +131,7 @@ function ProjectsPage() {
       <h1>Projects</h1>
 
       {projects.map((project) => (
-        <article className="project-case" key={project._id}>
+        <article className="project-case" id={project.slug} key={project._id}>
           {project.mainImage?.asset?.url && (
             <img
               className="project-main-image"
