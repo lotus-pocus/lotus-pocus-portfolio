@@ -5,10 +5,10 @@ import "./ClientWork.css";
 function ClientWork() {
   const [clientProjects, setClientProjects] = useState([]);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isChanging, setIsChanging] = useState(false);
 
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [isChanging, setIsChanging] = useState(false);
 
   const dragStart = useRef({
     x: 0,
@@ -50,28 +50,30 @@ function ClientWork() {
 
   const activeProject = clientProjects[activeIndex];
 
-  function selectProject(index) {
+  function changeProject(index) {
     if (
       index === activeIndex ||
       clientProjects.length < 2 ||
       isChanging
     ) {
+      setDragOffset(0);
+      setIsDragging(false);
       return;
     }
 
     setIsChanging(true);
-    setDragOffset(0);
     setIsDragging(false);
+    setDragOffset(0);
 
     window.setTimeout(() => {
       setActiveIndex(index);
       setIsChanging(false);
-    }, 300);
+    }, 250);
   }
 
   function showNextProject() {
     const nextIndex = (activeIndex + 1) % clientProjects.length;
-    selectProject(nextIndex);
+    changeProject(nextIndex);
   }
 
   function showPreviousProject() {
@@ -79,10 +81,18 @@ function ClientWork() {
       (activeIndex - 1 + clientProjects.length) %
       clientProjects.length;
 
-    selectProject(previousIndex);
+    changeProject(previousIndex);
   }
 
   function handlePointerDown(event) {
+    /*
+      Do not begin dragging when the user is clicking
+      a link or button inside the project.
+    */
+    if (event.target.closest("a, button")) {
+      return;
+    }
+
     if (clientProjects.length < 2 || isChanging) {
       return;
     }
@@ -107,15 +117,21 @@ function ClientWork() {
       return;
     }
 
-    const horizontalMovement = event.clientX - dragStart.current.x;
-    const verticalMovement = event.clientY - dragStart.current.y;
+    const horizontalMovement =
+      event.clientX - dragStart.current.x;
+
+    const verticalMovement =
+      event.clientY - dragStart.current.y;
 
     /*
-      Only treat the gesture as a horizontal drag when the user
-      has moved farther sideways than vertically. This helps retain
-      normal vertical page scrolling on mobile.
+      Only move the project sideways when the gesture
+      is more horizontal than vertical. This preserves
+      normal page scrolling on mobile.
     */
-    if (Math.abs(horizontalMovement) > Math.abs(verticalMovement)) {
+    if (
+      Math.abs(horizontalMovement) >
+      Math.abs(verticalMovement)
+    ) {
       setDragOffset(horizontalMovement);
     }
   }
@@ -128,27 +144,36 @@ function ClientWork() {
       return;
     }
 
-    const swipeThreshold = 60;
-
-    if (dragOffset <= -swipeThreshold) {
-      showNextProject();
-    } else if (dragOffset >= swipeThreshold) {
-      showPreviousProject();
-    } else {
-      setDragOffset(0);
-      setIsDragging(false);
-    }
+    const swipeThreshold = 70;
 
     dragStart.current.pointerId = null;
 
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
       event.currentTarget.releasePointerCapture(event.pointerId);
     }
+
+    if (dragOffset <= -swipeThreshold) {
+      showNextProject();
+      return;
+    }
+
+    if (dragOffset >= swipeThreshold) {
+      showPreviousProject();
+      return;
+    }
+
+    /*
+      Return the project smoothly to its original position
+      when the drag was not far enough.
+    */
+    setIsDragging(false);
+    setDragOffset(0);
   }
 
   function handlePointerCancel(event) {
     setDragOffset(0);
     setIsDragging(false);
+
     dragStart.current.pointerId = null;
 
     if (event.currentTarget.hasPointerCapture(event.pointerId)) {
@@ -166,23 +191,19 @@ function ClientWork() {
       <div className="client-feature">
         <article
           className={`client-feature-project ${
-            isChanging ? "is-changing" : ""
-          }`}
+            isDragging ? "is-dragging" : ""
+          } ${isChanging ? "is-changing" : ""}`}
           aria-live="polite"
+          onPointerDown={handlePointerDown}
+          onPointerMove={handlePointerMove}
+          onPointerUp={finishDrag}
+          onPointerCancel={handlePointerCancel}
+          style={{
+            transform: `translateX(${dragOffset}px)`,
+          }}
         >
           {activeProject.mainImage?.asset?.url && (
-            <div
-              className={`client-feature-image ${
-                isDragging ? "is-dragging" : ""
-              }`}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={finishDrag}
-              onPointerCancel={handlePointerCancel}
-              style={{
-                transform: `translateX(${dragOffset}px)`,
-              }}
-            >
+            <div className="client-feature-image">
               <img
                 src={activeProject.mainImage.asset.url}
                 alt={`${activeProject.title} project preview`}
@@ -250,7 +271,7 @@ function ClientWork() {
                 key={project._id}
                 type="button"
                 className={index === activeIndex ? "active" : ""}
-                onClick={() => selectProject(index)}
+                onClick={() => changeProject(index)}
                 aria-label={`Show ${project.title}`}
                 aria-pressed={index === activeIndex}
               />

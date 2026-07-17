@@ -28,6 +28,12 @@
 .client-feature {
   width: 100%;
   max-width: 1200px;
+
+  /*
+    Prevents the dragged project from creating
+    horizontal page scrolling.
+  */
+  overflow: hidden;
 }
 
 .client-feature-project {
@@ -35,16 +41,25 @@
   border-bottom: 1px solid #282828;
 
   opacity: 1;
-  transform: translateY(0);
+
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+
+  will-change: transform, opacity;
 
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+    transform 0.3s ease,
+    opacity 0.25s ease;
+}
+
+.client-feature-project.is-dragging {
+  cursor: grabbing;
+  transition: none;
 }
 
 .client-feature-project.is-changing {
   opacity: 0;
-  transform: translateY(8px);
 }
 
 /* Featured image */
@@ -54,17 +69,6 @@
 
   width: 100%;
   padding: 2rem 0;
-
-  cursor: grab;
-  touch-action: pan-y;
-  user-select: none;
-
-  transition: transform 0.25s ease;
-}
-
-.client-feature-image.is-dragging {
-  cursor: grabbing;
-  transition: none;
 }
 
 .client-feature-image img {
@@ -354,11 +358,10 @@
   }
 }
 
-/* Respect reduced-motion preferences */
+/* Reduced-motion accessibility */
 
 @media (prefers-reduced-motion: reduce) {
   .client-feature-project,
-  .client-feature-image,
   .client-feature-links a,
   .client-feature-dots button {
     transition: none;
