@@ -6,7 +6,7 @@
 
 .client-work-header {
   max-width: 900px;
-  margin-bottom: 4rem;
+  margin-bottom: 3.5rem;
 }
 
 .client-work-kicker,
@@ -20,21 +20,17 @@
 .client-work h2 {
   max-width: 900px;
   margin-top: 1rem;
+
   font-size: clamp(2.2rem, 5vw, 4.8rem);
   line-height: 1;
 }
 
 .client-feature {
-  max-width: 1500px;
+  width: 100%;
+  max-width: 1200px;
 }
 
 .client-feature-project {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.85fr) minmax(380px, 1.15fr);
-  align-items: stretch;
-
-  min-height: 480px;
-
   border-top: 1px solid #282828;
   border-bottom: 1px solid #282828;
 
@@ -51,55 +47,77 @@
   transform: translateY(8px);
 }
 
-.client-feature-copy {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 3rem;
+/* Featured image */
 
-  padding: 3rem 3rem 3rem 0;
+.client-feature-image {
+  width: 100%;
+  padding: 2rem 0;
+}
+
+.client-feature-image img {
+  display: block;
+
+  width: 100%;
+  height: clamp(260px, 42vw, 560px);
+
+  object-fit: contain;
+  object-position: center;
+
+  background: #080808;
+}
+
+/* Project information */
+
+.client-feature-copy {
+  max-width: 850px;
+  padding: 2.5rem 0 3rem;
 }
 
 .client-feature-copy h3 {
-  max-width: 520px;
-  margin: 1.25rem 0;
+  max-width: 800px;
+  margin: 1rem 0 1.25rem;
 
-  font-size: clamp(2.25rem, 4vw, 4.5rem);
-  line-height: 0.95;
+  font-size: clamp(2.25rem, 5vw, 4.75rem);
+  line-height: 0.98;
 }
 
 .client-feature-description {
-  max-width: 520px;
+  max-width: 700px;
+  margin: 0;
 
-  font-size: 1rem;
-  line-height: 1.65;
-
-  opacity: 0.72;
+  color: #b5b5b5;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.6;
 }
+
+/* Tags */
 
 .client-feature-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: 0.55rem;
 
-  margin-top: 2rem;
-  margin-bottom: 1.5rem;
+  margin-top: 1.75rem;
 }
 
 .client-feature-tags span {
-  padding: 0.4rem 0.7rem;
+  padding: 0.4rem 0.75rem;
 
-  border: 1px solid currentColor;
+  border: 1px solid #3a3a3a;
   border-radius: 999px;
 
-  color: inherit;
+  color: #bcbcbc;
   font-size: 0.75rem;
 }
+
+/* Links */
 
 .client-feature-links {
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
+
+  margin-top: 1.75rem;
 }
 
 .client-feature-links a {
@@ -107,34 +125,32 @@
 
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
 
-  color: inherit;
+  color: #f5f5f5;
   font-size: 0.95rem;
   text-decoration: none;
 
-  opacity: 0.8;
+  opacity: 0.82;
 
   transition:
-    opacity 0.3s ease,
-    transform 0.3s ease;
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .client-feature-links a::after {
   content: "";
 
   position: absolute;
+  right: 0;
+  bottom: -4px;
   left: 0;
-  bottom: -3px;
 
-  width: 100%;
   height: 1px;
 
   background: currentColor;
+  opacity: 0.4;
 
-  opacity: 0.35;
-
-  transition: opacity 0.3s ease;
+  transition: opacity 0.25s ease;
 }
 
 .client-feature-links a:hover {
@@ -146,25 +162,7 @@
   opacity: 1;
 }
 
-.client-feature-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  min-width: 0;
-  padding: 3rem 0 3rem 3rem;
-}
-
-.client-feature-image img {
-  display: block;
-
-  width: 100%;
-  max-width: 680px;
-  height: auto;
-  max-height: 400px;
-
-  object-fit: contain;
-}
+/* Project navigation dots */
 
 .client-feature-dots {
   display: flex;
@@ -192,7 +190,7 @@
 }
 
 .client-feature-dots button:hover {
-  transform: scale(1.25);
+  transform: scale(1.3);
 }
 
 .client-feature-dots button.active {
@@ -204,45 +202,109 @@
   outline-offset: 4px;
 }
 
+/* Tablets and landscape phones */
+
 @media (max-width: 900px) {
   .client-work {
     padding: 5rem 1.5rem;
   }
 
-  .client-feature-project {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-
-  .client-feature-copy {
-    padding: 2rem 0;
+  .client-work-header {
+    margin-bottom: 2.5rem;
   }
 
   .client-feature-image {
-    order: -1;
-    padding: 0 0 2rem;
+    padding: 1.5rem 0;
   }
 
   .client-feature-image img {
-    max-width: 620px;
-    max-height: 320px;
-  }
-}
-
-@media (max-width: 600px) {
-  .client-work-header {
-    margin-bottom: 3rem;
+    height: clamp(220px, 50vw, 420px);
   }
 
   .client-feature-copy {
-    gap: 2rem;
+    padding: 2rem 0 2.5rem;
   }
 
   .client-feature-copy h3 {
-    font-size: clamp(2.25rem, 11vw, 3.5rem);
+    max-width: 700px;
+    font-size: clamp(2.4rem, 7vw, 4.25rem);
+  }
+}
+
+/* Phones */
+
+@media (max-width: 600px) {
+  .client-work {
+    padding: 4.5rem 1.25rem;
+  }
+
+  .client-work-header {
+    margin-bottom: 2rem;
+  }
+
+  .client-feature-image {
+    padding: 1.25rem 0;
   }
 
   .client-feature-image img {
-    max-height: 250px;
+    height: 220px;
+  }
+
+  .client-feature-copy {
+    padding: 1.75rem 0 2rem;
+  }
+
+  .client-feature-copy h3 {
+    margin: 0.85rem 0 1rem;
+
+    font-size: clamp(2.25rem, 11vw, 3.5rem);
+    line-height: 0.98;
+  }
+
+  .client-feature-description {
+    font-size: 1rem;
+    line-height: 1.55;
+  }
+
+  .client-feature-tags {
+    margin-top: 1.4rem;
+  }
+
+  .client-feature-links {
+    margin-top: 1.5rem;
+  }
+
+  .client-feature-dots {
+    margin-top: 1.25rem;
+  }
+}
+
+/* Short landscape screens */
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .client-work {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  .client-work-header {
+    margin-bottom: 2rem;
+  }
+
+  .client-feature-image {
+    padding: 1.25rem 0;
+  }
+
+  .client-feature-image img {
+    height: min(52vh, 340px);
+  }
+
+  .client-feature-copy {
+    max-width: 760px;
+    padding: 1.75rem 0 2rem;
+  }
+
+  .client-feature-copy h3 {
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
   }
 }

@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { client } from "../../sanityClient";
-import Accordion from "../../components/Accordion/Accordion";
 import "./ClientWork.css";
 
 function ClientWork() {
@@ -27,12 +26,6 @@ function ClientWork() {
             asset-> {
               url
             }
-          },
-          cardBackgroundColor {
-            hex
-          },
-          cardTextColor {
-            hex
           }
         }
       `)
@@ -71,54 +64,51 @@ function ClientWork() {
         <p className="client-work-kicker">Client Work</p>
 
         <h2>Selected client work.</h2>
-
-        <Accordion
-          title="My approach to client work"
-          content="Working alongside businesses to improve their digital presence through website development, technical SEO, content strategy and interactive digital experiences."
-        />
       </div>
 
       <div className="client-feature">
         <article
-          aria-live="polite"
           className={`client-feature-project ${
             isChanging ? "is-changing" : ""
           }`}
-          style={{
-            backgroundColor:
-              activeProject.cardBackgroundColor?.hex || "#050505",
-            color: activeProject.cardTextColor?.hex || "#ffffff",
-          }}
+          aria-live="polite"
         >
-          <div className="client-feature-copy">
-            <div>
-              {activeProject.type && (
-                <p className="client-feature-type">
-                  {activeProject.type}
-                </p>
-              )}
-
-              <h3>{activeProject.title}</h3>
-
-              {activeProject.description && (
-                <p className="client-feature-description">
-                  {activeProject.description}
-                </p>
-              )}
-
-              {activeProject.tags?.length > 0 && (
-                <div className="client-feature-tags">
-                  {activeProject.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              )}
+          {activeProject.mainImage?.asset?.url && (
+            <div className="client-feature-image">
+              <img
+                src={activeProject.mainImage.asset.url}
+                alt={`${activeProject.title} project preview`}
+              />
             </div>
+          )}
+
+          <div className="client-feature-copy">
+            {activeProject.type && (
+              <p className="client-feature-type">
+                {activeProject.type}
+              </p>
+            )}
+
+            <h3>{activeProject.title}</h3>
+
+            {activeProject.description && (
+              <p className="client-feature-description">
+                {activeProject.description}
+              </p>
+            )}
+
+            {activeProject.tags?.length > 0 && (
+              <div className="client-feature-tags">
+                {activeProject.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            )}
 
             <div className="client-feature-links">
               {activeProject.slug && (
                 <a href={`/projects#${activeProject.slug}`}>
-                  View project →
+                  View case study →
                 </a>
               )}
 
@@ -131,27 +121,8 @@ function ClientWork() {
                   Visit website ↗
                 </a>
               )}
-
-              {activeProject.repo && (
-                <a
-                  href={activeProject.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View repository ↗
-                </a>
-              )}
             </div>
           </div>
-
-          {activeProject.mainImage?.asset?.url && (
-            <div className="client-feature-image">
-              <img
-                src={activeProject.mainImage.asset.url}
-                alt={`${activeProject.title} project preview`}
-              />
-            </div>
-          )}
         </article>
 
         {clientProjects.length > 1 && (
