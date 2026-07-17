@@ -50,8 +50,21 @@
 /* Featured image */
 
 .client-feature-image {
+  position: relative;
+
   width: 100%;
   padding: 2rem 0;
+
+  cursor: grab;
+  touch-action: pan-y;
+  user-select: none;
+
+  transition: transform 0.25s ease;
+}
+
+.client-feature-image.is-dragging {
+  cursor: grabbing;
+  transition: none;
 }
 
 .client-feature-image img {
@@ -64,6 +77,29 @@
   object-position: center;
 
   background: #080808;
+
+  pointer-events: none;
+  user-select: none;
+}
+
+.client-feature-swipe-hint {
+  position: absolute;
+  right: 1rem;
+  bottom: 3rem;
+
+  padding: 0.4rem 0.65rem;
+
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 999px;
+
+  background: rgba(5, 5, 5, 0.72);
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  pointer-events: none;
 }
 
 /* Project information */
@@ -221,6 +257,10 @@
     height: clamp(220px, 50vw, 420px);
   }
 
+  .client-feature-swipe-hint {
+    bottom: 2.5rem;
+  }
+
   .client-feature-copy {
     padding: 2rem 0 2.5rem;
   }
@@ -248,6 +288,11 @@
 
   .client-feature-image img {
     height: 220px;
+  }
+
+  .client-feature-swipe-hint {
+    right: 0.75rem;
+    bottom: 2rem;
   }
 
   .client-feature-copy {
@@ -306,5 +351,16 @@
 
   .client-feature-copy h3 {
     font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+  }
+}
+
+/* Respect reduced-motion preferences */
+
+@media (prefers-reduced-motion: reduce) {
+  .client-feature-project,
+  .client-feature-image,
+  .client-feature-links a,
+  .client-feature-dots button {
+    transition: none;
   }
 }
