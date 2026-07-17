@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Hero from "./sections/Hero/Hero";
+import ClientWork from "./sections/ClientWork/ClientWork";
 import Projects from "./sections/Projects/Projects";
 import SearchBox from "./components/SearchBox/SearchBox";
 import Nav from "./components/Nav/Nav";
@@ -11,6 +12,7 @@ function Home() {
   return (
     <>
       <Hero />
+      <ClientWork />
       <Projects />
     </>
   );

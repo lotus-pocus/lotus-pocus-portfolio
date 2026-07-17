@@ -20,6 +20,19 @@ export default {
       type: 'string',
     },
     {
+      name: 'workCategory',
+      title: 'Portfolio Section',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Client Work', value: 'client'},
+          {title: 'Projects & Experiments', value: 'project'},
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'project',
+    },
+    {
       name: 'description',
       title: 'Description',
       type: 'text',

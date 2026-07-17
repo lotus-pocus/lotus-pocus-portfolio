@@ -11,7 +11,9 @@ function Projects() {
   useEffect(() => {
     client
       .fetch(
-        `*[_type == "project"]{
+        `*[_type == "project" &&
+    coalesce(workCategory, "project") == "project"
+  ] | order(displayOrder asc) {
           _id,
           title,
           "slug": slug.current,
@@ -76,10 +78,10 @@ function Projects() {
       }}
     >
       <div className="projects-header">
-        <p className="section-kicker">Selected Work</p>
+        <p className="section-kicker">Projects & Experiments</p>
 
         <h2>
-          Projects with a focus on learning, interaction and immersive
+          Independent projects exploring learning, interaction and immersive
           presentation.
         </h2>
 
