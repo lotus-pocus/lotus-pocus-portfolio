@@ -1,0 +1,88 @@
+.about {
+  padding: 8rem 5.5vw;
+  background: #050505;
+  color: #f5f5f5;
+}
+
+.about-header {
+  max-width: 900px;
+}
+
+.about-kicker {
+  margin-bottom: 1.5rem;
+  color: #baff00;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.about h2 {
+  max-width: 14ch;
+  margin-bottom: 2rem;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.95;
+  font-weight: 600;
+}
+
+.about-introduction {
+  max-width: 700px;
+  margin-bottom: 3rem;
+  color: #bcbcbc;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+  line-height: 1.75;
+}
+
+/* Accordion spacing */
+
+.about .accordion {
+  margin-top: 2rem;
+}
+
+.about .accordion-content {
+  max-width: 720px;
+}
+
+.about .accordion-content p {
+  margin-bottom: 1.5rem;
+  color: #bcbcbc;
+  line-height: 1.8;
+}
+
+.about .accordion-content ul {
+  margin: 1.5rem 0;
+  padding-left: 1.25rem;
+}
+
+.about .accordion-content li {
+  margin-bottom: 0.75rem;
+  color: #bcbcbc;
+  line-height: 1.6;
+}
+
+.about .accordion-content strong {
+  color: #ffffff;
+}
+
+.about .accordion-content em {
+  display: block;
+  margin-top: 2rem;
+  color: #ffffff;
+  font-style: italic;
+}
+
+/* Mobile */
+
+@media (max-width: 800px) {
+  .about {
+    padding: 6rem 1.5rem;
+  }
+
+  .about h2 {
+    margin-bottom: 1.5rem;
+  }
+
+  .about-introduction {
+    margin-bottom: 2rem;
+  }
+}

@@ -1,0 +1,58 @@
+.learnings-page {
+  min-height: 100vh;
+  padding: 10rem 5.5vw 6rem;
+  background: #050505;
+  color: #f5f5f5;
+}
+
+.learnings-header {
+  max-width: 1100px;
+  margin-bottom: 5rem;
+}
+
+.learnings-kicker {
+  margin-bottom: 1.5rem;
+  color: #baff00;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.learnings-header h1 {
+  max-width: 13ch;
+  margin-bottom: 2rem;
+  font-size: clamp(3.5rem, 8vw, 8rem);
+}
+
+.learnings-introduction {
+  max-width: 690px;
+  color: #bcbcbc;
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  line-height: 1.7;
+}
+
+.learnings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.learnings-status {
+  color: #bcbcbc;
+  font-size: 1rem;
+}
+
+@media (max-width: 800px) {
+  .learnings-page {
+    padding: 8rem 1.5rem 4rem;
+  }
+
+  .learnings-header {
+    margin-bottom: 3rem;
+  }
+
+  .learnings-grid {
+    grid-template-columns: 1fr;
+  }
+}

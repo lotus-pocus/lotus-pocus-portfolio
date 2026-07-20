@@ -5,9 +5,9 @@ export default function Nav() {
     <nav className="site-nav">
       <a href="/">Home</a>
       <a href="/projects">Projects</a>
-      <a href="/insights">Insights</a>
-      <a href="/about">About</a>
-      <a href="/contact">Contact</a>
+      <a href="/Learnings">Learnings</a>
+      <a href="/#about">About</a>
+      <a href="/#contact">Contact</a>
     </nav>
   )
 }

@@ -1,0 +1,58 @@
+.learning-card {
+  display: flex;
+  flex-direction: column;
+  min-height: 320px;
+  padding: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #0b0b0b;
+}
+
+.learning-card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  color: #a8a8a8;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.learning-card h2 {
+  max-width: 13ch;
+  margin-bottom: 1.25rem;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+}
+
+.learning-card p {
+  max-width: 48ch;
+  margin-bottom: 2rem;
+  color: #bcbcbc;
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+.learning-card a {
+  width: fit-content;
+  margin-top: auto;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid currentColor;
+  font-weight: 600;
+}
+
+.learning-card a:hover {
+  opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+  .learning-card {
+    min-height: 280px;
+    padding: 1.5rem;
+  }
+
+  .learning-card-meta {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+}

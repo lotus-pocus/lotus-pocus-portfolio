@@ -40,17 +40,11 @@
   border-top: 1px solid #282828;
   border-bottom: 1px solid #282828;
 
-  opacity: 1;
-
   cursor: grab;
   touch-action: pan-y;
   user-select: none;
 
-  will-change: transform, opacity;
-
-  transition:
-    transform 0.3s ease,
-    opacity 0.25s ease;
+  will-change: transform;
 }
 
 .client-feature-project.is-dragging {
@@ -58,8 +52,8 @@
   transition: none;
 }
 
-.client-feature-project.is-changing {
-  opacity: 0;
+.client-feature-project.is-animating {
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 /* Featured image */
