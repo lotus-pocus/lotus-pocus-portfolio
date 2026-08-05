@@ -17,12 +17,18 @@
   border-top: 1px solid rgba(255, 255, 255, 0.18);
 }
 
+.project-case {
+  scroll-margin-top: 40px;
+}
+
 .project-main-image {
-  width: 100%;
-  max-height: 620px;
+  display: block;
+  width: min(100%, 1100px);
+  height: clamp(260px, 32vw, 420px);
   object-fit: cover;
+  object-position: center;
   border-radius: 1.5rem;
-  margin-bottom: 3rem;
+  margin: 0 auto 3.5rem;
 }
 
 .project-case-type {
@@ -33,6 +39,26 @@
   margin-bottom: 0.75rem;
 }
 
+.project-case-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.5rem;
+}
+
+.project-case-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2rem;
+  padding: 0.4rem 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  font-size: 0.78rem;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+
 .project-case h2 {
   font-size: clamp(2.5rem, 6vw, 5.5rem);
   line-height: 0.95;
@@ -40,7 +66,7 @@
 }
 
 .project-intro {
-  max-width: 1400px;
+  max-width: 720px;
   font-size: clamp(1.05rem, 1.4vw, 1.35rem);
   line-height: 1.7;
   opacity: 0.78;
@@ -98,6 +124,31 @@
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
+  border-radius: 1.25rem;
+}
+
+.stacked-layout {
+  width: 100%;
+}
+
+.stacked-layout .project-copy {
+  max-width: 720px;
+}
+
+.stacked-layout .project-image-grid {
+  display: block;
+  width: min(100%, 1100px);
+  max-width: none;
+  margin: 2.5rem auto 0;
+  padding-top: 0;
+}
+
+.stacked-layout .project-image-grid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  object-position: top;
   border-radius: 1.25rem;
 }
 
@@ -165,6 +216,9 @@
   }
 
   .project-main-image {
-    max-height: 420px;
-  }
+   width: 100%;
+   height: 240px;
+   border-radius: 1rem;
+   margin-bottom: 2.25rem;
+ }
 }

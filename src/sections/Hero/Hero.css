@@ -34,7 +34,11 @@
 }
 
 .hero h1 {
+  font-family: "Geist", sans-serif;
+  font-weight: 700;
   font-size: clamp(3.5rem, 5.2vw, 6rem);
+  line-height: 0.98;
+  letter-spacing: -0.02em;
   max-width: 1050px;
   margin-bottom: 2rem;
 }

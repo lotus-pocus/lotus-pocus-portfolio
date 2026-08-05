@@ -34,9 +34,11 @@ function CaseStudySection({
       className={`project-case-section ${
         layout === "gallery"
           ? "gallery-layout"
-          : hasImages
-            ? "split"
-            : "full-width"
+          : layout === "stacked"
+            ? "stacked-layout"
+            : hasImages
+              ? "split"
+              : "full-width"
       } ${reverse ? "reverse" : ""}`}
     >
       <div className="project-copy">
@@ -89,7 +91,7 @@ function ProjectsPage() {
         }
       `,
       )
-      .then((data) => setProjects(data))
+      .then((data) => setProjects(data || []))
       .catch(console.error);
 
     client
@@ -109,15 +111,29 @@ function ProjectsPage() {
   useEffect(() => {
     if (projects.length === 0 || !window.location.hash) return;
 
-    const slug = window.location.hash.slice(1);
-    const projectSection = document.getElementById(slug);
+    const slug = decodeURIComponent(window.location.hash.slice(1));
 
-    if (projectSection) {
-      projectSection.scrollIntoView({
+    const scrollToProject = () => {
+      const projectSection = document.getElementById(slug);
+
+      if (!projectSection) return;
+
+      const headerOffset = 40;
+
+      const projectPosition =
+        projectSection.getBoundingClientRect().top + window.scrollY;
+
+      window.scrollTo({
+        top: Math.max(projectPosition - headerOffset, 0),
         behavior: "smooth",
-        block: "start",
       });
-    }
+    };
+
+    const scrollTimeout = window.setTimeout(scrollToProject, 350);
+
+    return () => {
+      window.clearTimeout(scrollTimeout);
+    };
   }, [projects]);
 
   return (
@@ -140,12 +156,23 @@ function ProjectsPage() {
             />
           )}
 
-          <p className="project-case-type">{project.type}</p>
-          <h2>{project.title}</h2>
+          <header className="project-case-header">
+            <p className="project-case-type">{project.type}</p>
 
-          <p className="project-intro">
-            {project.caseStudyIntro || project.description}
-          </p>
+            <h2>{project.title}</h2>
+
+            <p className="project-intro">
+              {project.caseStudyIntro || project.description}
+            </p>
+
+            {project.tags?.length > 0 && (
+              <div className="project-case-tags">
+                {project.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            )}
+          </header>
 
           <CaseStudySection
             heading="Challenge"
@@ -153,6 +180,7 @@ function ProjectsPage() {
             images={project.challengeImages}
             title={project.title}
             section="challenge"
+            layout="stacked"
           />
 
           <CaseStudySection

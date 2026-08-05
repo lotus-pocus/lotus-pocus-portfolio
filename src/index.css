@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&display=swap");
+
 * {
   margin: 0;
   padding: 0;
@@ -11,10 +13,24 @@ body,
   min-height: 100%;
 }
 
+html {
+  font-family: "Geist", Arial, sans-serif;
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: "Geist", Arial, sans-serif;
   background: #050505;
   color: white;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }
 
 a {
@@ -29,22 +45,16 @@ img {
 
 h1,
 h2,
-h3 {
-  font-family: "Tiempos Headline", Georgia, serif;
-  letter-spacing: 0;
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Geist", Arial, sans-serif;
+  font-weight: 800;
+  line-height: 0.98;
+  letter-spacing: -0.045em;
 }
 
-h1 {
-  font-weight: 700;
-  line-height: 1;
-}
-
-h2 {
-  font-weight: 700;
-  line-height: 1.05;
-}
-
-h3 {
-  font-weight: 700;
-  line-height: 1.1;
+p {
+  line-height: 1.65;
 }
