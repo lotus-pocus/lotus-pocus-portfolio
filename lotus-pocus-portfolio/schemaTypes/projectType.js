@@ -38,6 +38,25 @@ export default {
       type: 'text',
     },
     {
+      name: 'homepageSummary',
+      title: 'Homepage Summary',
+      type: 'text',
+      rows: 3,
+      description: 'Short summary used on homepage project cards. Aim for one concise sentence.',
+      validation: (Rule) =>
+        Rule.max(180).warning('Keep the homepage summary to 180 characters or fewer.'),
+    },
+    {
+      name: 'clientLogo',
+      title: 'Client Logo',
+      type: 'image',
+      description:
+        'Optional. Used on Client Work cards. Upload a transparent PNG, SVG or WebP where possible.',
+      options: {
+        hotspot: false,
+      },
+    },
+    {
       name: 'metaDescription',
       title: 'Meta Description',
       type: 'text',

@@ -41,14 +41,24 @@ function ClientWork() {
           title,
           type,
           description,
+          homepageSummary,
           tags,
           projectUrl,
           repo,
           "slug": slug.current,
-          mainImage {
+
+          clientLogo {
             asset-> {
               url
             }
+          },
+
+          cardBackgroundColor {
+            hex
+          },
+
+          cardTextColor {
+            hex
           }
         }
       `),
@@ -79,7 +89,9 @@ function ClientWork() {
 
   function setTrackedTimeout(callback, duration) {
     const timeout = window.setTimeout(callback, duration);
+
     timeoutRefs.current.push(timeout);
+
     return timeout;
   }
 
@@ -123,10 +135,14 @@ function ClientWork() {
     const viewportWidth = window.innerWidth;
 
     const exitOffset =
-      direction === "next" ? -viewportWidth : viewportWidth;
+      direction === "next"
+        ? -viewportWidth
+        : viewportWidth;
 
     const entryOffset =
-      direction === "next" ? viewportWidth : -viewportWidth;
+      direction === "next"
+        ? viewportWidth
+        : -viewportWidth;
 
     setIsDragging(false);
     setIsAnimating(true);
@@ -136,8 +152,8 @@ function ClientWork() {
       setActiveIndex(nextIndex);
 
       /*
-        Temporarily turn off animation and place the
-        incoming card just outside the opposite edge.
+        Temporarily remove the transition and position
+        the incoming card just outside the opposite edge.
       */
       setIsAnimating(false);
       updateDragOffset(entryOffset);
@@ -190,7 +206,7 @@ function ClientWork() {
     dragStart.current = {
       x: event.clientX,
       y: event.clientY,
-      time: performance.now(),
+      time: event.timeStamp,
       pointerId: event.pointerId,
       directionLocked: false,
       isHorizontal: false,
@@ -217,8 +233,8 @@ function ClientWork() {
       event.clientY - dragStart.current.y;
 
     /*
-      Wait for a small amount of movement before deciding
-      whether this is a horizontal swipe or vertical scroll.
+      Wait for a little movement before deciding whether
+      this is a horizontal swipe or vertical page scroll.
     */
     if (!dragStart.current.directionLocked) {
       const movementDistance = Math.max(
@@ -243,11 +259,8 @@ function ClientWork() {
 
     event.preventDefault();
 
-    /*
-      Slight resistance keeps the card controlled while
-      still following the pointer closely.
-    */
-    const resistedOffset = horizontalMovement * 0.92;
+    const resistedOffset =
+      horizontalMovement * 0.92;
 
     updateDragOffset(resistedOffset);
   }
@@ -261,7 +274,7 @@ function ClientWork() {
     }
 
     const elapsedTime = Math.max(
-      performance.now() - dragStart.current.time,
+      event.timeStamp - dragStart.current.time,
       1,
     );
 
@@ -270,8 +283,14 @@ function ClientWork() {
 
     dragStart.current.pointerId = null;
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
+    if (
+      event.currentTarget.hasPointerCapture(
+        event.pointerId,
+      )
+    ) {
+      event.currentTarget.releasePointerCapture(
+        event.pointerId,
+      );
     }
 
     const swipedLeft =
@@ -292,10 +311,6 @@ function ClientWork() {
       return;
     }
 
-    /*
-      Return the card smoothly to its starting position
-      when the gesture was not long or fast enough.
-    */
     setIsDragging(false);
     setIsAnimating(true);
     updateDragOffset(0);
@@ -308,8 +323,14 @@ function ClientWork() {
   function handlePointerCancel(event) {
     dragStart.current.pointerId = null;
 
-    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
-      event.currentTarget.releasePointerCapture(event.pointerId);
+    if (
+      event.currentTarget.hasPointerCapture(
+        event.pointerId,
+      )
+    ) {
+      event.currentTarget.releasePointerCapture(
+        event.pointerId,
+      );
     }
 
     setIsDragging(false);
@@ -325,7 +346,8 @@ function ClientWork() {
     return null;
   }
 
-  const activeProject = clientProjects[activeIndex];
+  const activeProject =
+    clientProjects[activeIndex];
 
   const accordionTitle =
     siteSettings?.clientWorkAccordionTitle ||
@@ -336,7 +358,10 @@ function ClientWork() {
     "These are commercial projects completed for clients. The case studies focus on the design, development and measurable value of the work while respecting client confidentiality.";
 
   return (
-    <section className="client-work" id="client-work">
+    <section
+      className="client-work"
+      id="client-work"
+    >
       <div className="client-work-header">
         <p className="client-work-kicker">
           Client Work
@@ -364,23 +389,57 @@ function ClientWork() {
         />
 
         {clientProjects.length > 1 && (
-          <div
-            className="client-feature-dots"
-            aria-label="Choose a client project"
-          >
-            {clientProjects.map((project, index) => (
+          <div className="client-feature-navigation">
+            <p
+              className="client-feature-counter"
+              aria-live="polite"
+            >
+              {String(activeIndex + 1).padStart(2, "0")}
+              <span> / </span>
+              {String(clientProjects.length).padStart(
+                2,
+                "0",
+              )}
+            </p>
+
+            <div className="client-feature-arrows">
               <button
-                key={project._id}
                 type="button"
-                className={
-                  index === activeIndex ? "active" : ""
-                }
-                onClick={() => changeProject(index)}
-                aria-label={`Show ${project.title}`}
-                aria-pressed={index === activeIndex}
+                onClick={showPreviousProject}
+                aria-label="Show previous client project"
                 disabled={isAnimating}
-              />
-            ))}
+              >
+                ←
+              </button>
+
+              <button
+                type="button"
+                onClick={showNextProject}
+                aria-label="Show next client project"
+                disabled={isAnimating}
+              >
+                →
+              </button>
+            </div>
+
+            <div
+              className="client-feature-dots"
+              aria-label="Choose a client project"
+            >
+              {clientProjects.map((project, index) => (
+                <button
+                  key={project._id}
+                  type="button"
+                  className={
+                    index === activeIndex ? "active" : ""
+                  }
+                  onClick={() => changeProject(index)}
+                  aria-label={`Show ${project.title}`}
+                  aria-pressed={index === activeIndex}
+                  disabled={isAnimating}
+                />
+              ))}
+            </div>
           </div>
         )}
       </div>
