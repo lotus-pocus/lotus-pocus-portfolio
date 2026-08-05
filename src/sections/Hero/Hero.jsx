@@ -4,6 +4,7 @@ import "./Hero.css";
 
 function Hero() {
   const [siteSettings, setSiteSettings] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     client
@@ -26,9 +27,18 @@ function Hero() {
           }
         }`,
       )
-      .then((data) => setSiteSettings(data))
-      .catch(console.error);
+      .then((data) => {
+        setSiteSettings(data);
+      })
+      .catch(console.error)
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, []);
+
+  if (isLoading) {
+    return <section className="hero hero-loading" />;
+  }
 
   return (
     <section
@@ -43,14 +53,10 @@ function Hero() {
             {siteSettings?.siteTitle || "LOTUS POCUS"}
           </p>
 
-          <h1>
-            {siteSettings?.heroHeading ||
-              "Building atmospheric frontend experiences with a growing focus on interactive web."}
-          </h1>
+          <h1>{siteSettings?.heroHeading}</h1>
 
           <p className="hero-description">
-            {siteSettings?.heroDescription ||
-              "Exploring frontend web design, immersive interfaces, educational tools, realtime visuals and lightweight WebGL experiences using React and modern frontend technologies."}
+            {siteSettings?.heroDescription}
           </p>
 
           <div className="hero-links">
@@ -61,7 +67,11 @@ function Hero() {
             )}
 
             {siteSettings?.linkedinUrl && (
-              <a href={siteSettings.linkedinUrl} target="_blank" rel="noreferrer">
+              <a
+                href={siteSettings.linkedinUrl}
+                target="_blank"
+                rel="noreferrer"
+              >
                 LinkedIn
               </a>
             )}

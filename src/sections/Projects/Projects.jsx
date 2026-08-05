@@ -7,13 +7,15 @@ import "./Projects.css";
 function Projects() {
   const [sanityProjects, setSanityProjects] = useState([]);
   const [siteSettings, setSiteSettings] = useState(null);
+  const [selectedSkills, setSelectedSkills] = useState([]);
 
   useEffect(() => {
     client
       .fetch(
-        `*[_type == "project" &&
-    coalesce(workCategory, "project") == "project"
-  ] | order(displayOrder asc) {
+        `*[
+          _type == "project" &&
+          coalesce(workCategory, "project") == "project"
+        ] | order(displayOrder asc) {
           _id,
           title,
           "slug": slug.current,
@@ -33,40 +35,58 @@ function Projects() {
       )
       .then((data) => {
         console.log("Sanity projects:", data);
-        setSanityProjects(data);
+        setSanityProjects(data || []);
       })
       .catch(console.error);
 
     client
       .fetch(
         `*[_type == "siteSettings"][0]{
-      projectsAccordionTitle,
-      projectsAccordionContent,
-      ContactCTA,
-      ContactCTAButtonLabel,
-      contactEmail,
-      GoogleMapsURL,
+          projectsAccordionTitle,
+          projectsAccordionContent,
+          ContactCTA,
+          ContactCTAButtonLabel,
+          contactEmail,
+          GoogleMapsURL,
 
-      heroBackgroundColor {
-        hex
-      },
-      projectsBackgroundColor {
-        hex
-      },
-      experimentsBackgroundColor {
-        hex
-      },
-      aboutBackgroundColor {
-        hex
-      },
-      contactBackgroundColor {
-        hex
-      }
-    }`,
+          heroBackgroundColor {
+            hex
+          },
+          projectsBackgroundColor {
+            hex
+          },
+          experimentsBackgroundColor {
+            hex
+          },
+          aboutBackgroundColor {
+            hex
+          },
+          contactBackgroundColor {
+            hex
+          }
+        }`,
       )
       .then((data) => setSiteSettings(data))
       .catch(console.error);
   }, []);
+
+  const filteredProjects = selectedSkills.length
+    ? sanityProjects.filter((project) =>
+        selectedSkills.every((skill) =>
+          project.tags?.includes(skill),
+        ),
+      )
+    : sanityProjects;
+
+  function toggleSkill(skill) {
+    setSelectedSkills((currentSkills) =>
+      currentSkills.includes(skill)
+        ? currentSkills.filter(
+            (currentSkill) => currentSkill !== skill,
+          )
+        : [...currentSkills, skill],
+    );
+  }
 
   return (
     <section
@@ -91,7 +111,29 @@ function Projects() {
         />
       </div>
 
-      <ProjectCarousel projects={sanityProjects} />
+      {selectedSkills.length > 0 && (
+        <div className="projects-filter-status" aria-live="polite">
+          {selectedSkills.map((skill) => (
+            <button
+              key={skill}
+              type="button"
+              onClick={() => toggleSkill(skill)}
+              className="projects-clear-filter"
+              aria-label={`Remove ${skill} filter`}
+            >
+              {skill}
+              <span className="close-icon">×</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      <ProjectCarousel
+        projects={filteredProjects}
+        selectedSkills={selectedSkills}
+        onToggleSkill={toggleSkill}
+      />
+
       {siteSettings?.ContactCTA && siteSettings?.ContactCTAButtonLabel && (
         <div className="projects-cta">
           <p>{siteSettings.ContactCTA}</p>

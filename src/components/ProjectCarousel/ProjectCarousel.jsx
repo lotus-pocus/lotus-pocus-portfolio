@@ -1,11 +1,24 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./ProjectCarousel.css";
 
-function ProjectCarousel({ projects }) {
+function ProjectCarousel({
+  projects,
+  selectedSkills,
+  onToggleSkill,
+}) {
   const carouselRef = useRef(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+
+  useEffect(() => {
+    if (!carouselRef.current) return;
+
+    carouselRef.current.scrollTo({
+      left: 0,
+      behavior: "smooth",
+    });
+  }, [selectedSkills]);
 
   const getContrastColor = (hex) => {
     if (!hex) return "#f5f5f5";
@@ -29,20 +42,24 @@ function ProjectCarousel({ projects }) {
     });
   };
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (event) => {
     if (!carouselRef.current) return;
 
+    if (event.target.closest("a, button")) {
+      return;
+    }
+
     setIsDragging(true);
-    setStartX(e.pageX - carouselRef.current.offsetLeft);
+    setStartX(event.pageX - carouselRef.current.offsetLeft);
     setScrollLeft(carouselRef.current.scrollLeft);
   };
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (event) => {
     if (!isDragging || !carouselRef.current) return;
 
-    e.preventDefault();
+    event.preventDefault();
 
-    const x = e.pageX - carouselRef.current.offsetLeft;
+    const x = event.pageX - carouselRef.current.offsetLeft;
     const walk = (x - startX) * 1.3;
 
     carouselRef.current.scrollLeft = scrollLeft - walk;
@@ -52,12 +69,18 @@ function ProjectCarousel({ projects }) {
     setIsDragging(false);
   };
 
+  const handleSkillClick = (event, tag) => {
+    event.stopPropagation();
+    onToggleSkill(tag);
+  };
+
   if (!projects?.length) return null;
 
   return (
     <div className="project-carousel">
       <div className="carousel-controls">
         <button
+          type="button"
           onClick={() => scrollCarousel("prev")}
           aria-label="Previous project"
         >
@@ -65,6 +88,7 @@ function ProjectCarousel({ projects }) {
         </button>
 
         <button
+          type="button"
           onClick={() => scrollCarousel("next")}
           aria-label="Next project"
         >
@@ -73,7 +97,9 @@ function ProjectCarousel({ projects }) {
       </div>
 
       <div
-        className={`carousel-track ${isDragging ? "is-dragging" : ""}`}
+        className={`carousel-track ${
+          isDragging ? "is-dragging" : ""
+        }`}
         ref={carouselRef}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
@@ -81,9 +107,12 @@ function ProjectCarousel({ projects }) {
         onMouseLeave={stopDragging}
       >
         {projects.map((project) => {
-          const backgroundColor = project.cardBackgroundColor?.hex || "#080808";
+          const backgroundColor =
+            project.cardBackgroundColor?.hex || "#080808";
+
           const textColor =
-            project.cardTextColor?.hex || getContrastColor(backgroundColor);
+            project.cardTextColor?.hex ||
+            getContrastColor(backgroundColor);
 
           return (
             <article
@@ -100,17 +129,47 @@ function ProjectCarousel({ projects }) {
 
               <p>{project.description}</p>
 
-              <div className="project-tags">
-                {project.tags?.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
-              </div>
+              {project.tags?.length > 0 && (
+                <div
+                  className="project-tags"
+                  aria-label={`Skills used in ${project.title}`}
+                >
+                  {project.tags.map((tag) => {
+                    const isActive =
+                      selectedSkills.includes(tag);
+
+                    return (
+                      <button
+                        key={tag}
+                        type="button"
+                        className={isActive ? "active" : ""}
+                        onClick={(event) =>
+                          handleSkillClick(event, tag)
+                        }
+                        onMouseDown={(event) =>
+                          event.stopPropagation()
+                        }
+                        aria-pressed={isActive}
+                        aria-label={
+                          isActive
+                            ? `Remove ${tag} filter`
+                            : `Add ${tag} filter`
+                        }
+                      >
+                        {tag}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
               <div className="project-links">
                 {project.slug && (
                   <a
                     href={`/projects#${project.slug}`}
-                    onMouseDown={(e) => e.stopPropagation()}
+                    onMouseDown={(event) =>
+                      event.stopPropagation()
+                    }
                     aria-label={`View case study for ${project.title}`}
                   >
                     Case study →
@@ -122,7 +181,9 @@ function ProjectCarousel({ projects }) {
                     href={project.projectUrl}
                     target="_blank"
                     rel="noreferrer"
-                    onMouseDown={(e) => e.stopPropagation()}
+                    onMouseDown={(event) =>
+                      event.stopPropagation()
+                    }
                   >
                     ↗ Live Site
                   </a>
@@ -133,7 +194,9 @@ function ProjectCarousel({ projects }) {
                     href={project.repo}
                     target="_blank"
                     rel="noreferrer"
-                    onMouseDown={(e) => e.stopPropagation()}
+                    onMouseDown={(event) =>
+                      event.stopPropagation()
+                    }
                   >
                     ↗ GitHub
                   </a>
