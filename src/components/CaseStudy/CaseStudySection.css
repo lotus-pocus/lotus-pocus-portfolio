@@ -1,0 +1,22 @@
+.case-study-section {
+  width: 100%;
+  margin: 5rem 0;
+}
+
+.case-study-copy {
+  max-width: 760px;
+  margin-bottom: 2.5rem;
+}
+
+.case-study-copy h3 {
+  margin: 0 0 1rem;
+  font-size: clamp(1.4rem, 2vw, 1.8rem);
+  line-height: 1.2;
+}
+
+.case-study-copy p {
+  margin: 0;
+  font-size: clamp(1.05rem, 1.25vw, 1.2rem);
+  line-height: 1.75;
+  opacity: 0.92;
+}

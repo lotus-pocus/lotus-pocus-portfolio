@@ -1,0 +1,35 @@
+.case-study-gallery {
+  width: 100%;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.case-study-gallery.single {
+  grid-template-columns: minmax(0, 760px);
+}
+
+.case-study-gallery.two-column,
+.case-study-gallery.gallery {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.case-study-gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: contain;
+  border-radius: 12px;
+  cursor: zoom-in;
+}
+
+@media (max-width: 800px) {
+  .case-study-gallery.two-column,
+  .case-study-gallery.gallery {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-gallery img {
+    max-height: none;
+  }
+}

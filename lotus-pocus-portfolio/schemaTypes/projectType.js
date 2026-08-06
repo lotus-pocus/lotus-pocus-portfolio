@@ -134,42 +134,149 @@ export default {
     },
     {
       name: 'challenge',
-      title: 'Challenge / Brief',
+      title: 'Legacy: Challenge / Brief',
       type: 'text',
+      description:
+        'Temporary legacy field. Move this content into Case Study Sections before removing.',
+      readOnly: true,
     },
     {
       name: 'challengeImages',
-      title: 'Challenge Images',
+      title: 'Legacy: Challenge Images',
       type: 'array',
       of: [{type: 'image', options: {hotspot: true}}],
       description:
-        'Optional. Add 1–3 images to support the Challenge section. Recommended: 1600×900 JPG/WebP under 500KB.',
+        'Temporary legacy field. Move these images into Case Study Sections before removing.',
+      readOnly: true,
     },
     {
       name: 'solution',
-      title: 'What I Built',
+      title: 'Legacy: What I Built',
       type: 'text',
+      description:
+        'Temporary legacy field. Move this content into Case Study Sections before removing.',
+      readOnly: true,
     },
     {
       name: 'solutionImages',
-      title: 'What I Built Images',
+      title: 'Legacy: What I Built Images',
       type: 'array',
       of: [{type: 'image', options: {hotspot: true}}],
       description:
-        'Optional. Add 1–3 images to support the What I Built section. Recommended: 1600×900 JPG/WebP under 500KB.',
+        'Temporary legacy field. Move these images into Case Study Sections before removing.',
+      readOnly: true,
     },
     {
       name: 'outcome',
-      title: 'Outcome / What It Shows',
+      title: 'Legacy: Outcome / What It Shows',
       type: 'text',
+      description:
+        'Temporary legacy field. Move this content into Case Study Sections before removing.',
+      readOnly: true,
     },
     {
       name: 'outcomeImages',
-      title: 'Outcome Images',
+      title: 'Legacy: Outcome Images',
       type: 'array',
       of: [{type: 'image', options: {hotspot: true}}],
       description:
-        'Optional. Add 1–3 images to support the Outcome section. Recommended: 1600×900 JPG/WebP under 500KB.',
+        'Temporary legacy field. Move these images into Case Study Sections before removing.',
+      readOnly: true,
+    },
+    {
+      name: 'caseStudySections',
+      title: 'Case Study Sections',
+      type: 'array',
+      description:
+        'Build the case study using flexible sections. Add text, images and choose a layout for each section.',
+      of: [
+        {
+          name: 'caseStudySection',
+          title: 'Case Study Section',
+          type: 'object',
+          fields: [
+            {
+              name: 'heading',
+              title: 'Section Heading',
+              type: 'string',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: 'body',
+              title: 'Section Copy',
+              type: 'text',
+              rows: 6,
+            },
+            {
+              name: 'images',
+              title: 'Section Images',
+              type: 'array',
+              of: [
+                {
+                  type: 'image',
+                  options: {
+                    hotspot: true,
+                  },
+                  fields: [
+                    {
+                      name: 'alt',
+                      title: 'Alternative Text',
+                      type: 'string',
+                      description: 'Describe the image for accessibility.',
+                    },
+                    {
+                      name: 'caption',
+                      title: 'Caption',
+                      type: 'string',
+                      description: 'Optional caption shown below the image.',
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'imageLayout',
+              title: 'Image Layout',
+              type: 'string',
+              options: {
+                list: [
+                  {
+                    title: 'Single image',
+                    value: 'single',
+                  },
+                  {
+                    title: 'Two columns',
+                    value: 'two-column',
+                  },
+                  {
+                    title: 'Gallery',
+                    value: 'gallery',
+                  },
+                ],
+                layout: 'radio',
+              },
+              initialValue: 'two-column',
+            },
+          ],
+          preview: {
+            select: {
+              title: 'heading',
+              images: 'images',
+              layout: 'imageLayout',
+            },
+            prepare({title, images, layout}) {
+              const imageCount = images?.length || 0
+
+              return {
+                title: title || 'Untitled section',
+                subtitle: `${imageCount} image${
+                  imageCount === 1 ? '' : 's'
+                } · ${layout || 'two-column'}`,
+              }
+            },
+          },
+        },
+      ],
     },
     {
       name: 'displayOrder',

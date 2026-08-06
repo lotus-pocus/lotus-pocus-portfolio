@@ -1,48 +1,66 @@
-import { useEffect, useState } from 'react'
-import { client } from '../../sanityClient'
-import './SearchBox.css'
+import { useEffect, useState } from "react";
+import { client } from "../../sanityClient";
+import "./SearchBox.css";
 
 export default function SearchBox() {
-  const [term, setTerm] = useState('')
-  const [results, setResults] = useState([])
-  const [isOpen, setIsOpen] = useState(false)
+  const [term, setTerm] = useState("");
+  const [results, setResults] = useState([]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const trimmedTerm = term.trim();
+  const hasSearchTerm = trimmedTerm.length >= 2;
 
   useEffect(() => {
-    if (term.trim().length < 2) {
-      setResults([])
-      return
+    if (!hasSearchTerm) {
+      return;
     }
 
     const query = `
       *[
         _type == "project" &&
+        !(_id in path("drafts.**")) &&
         (
           title match $searchTerm ||
           type match $searchTerm ||
           description match $searchTerm ||
-          $plainTerm in tags
+          tags[] match $searchTerm
         )
-      ]{
+      ] | order(title asc) {
+        _id,
         title,
+        "slug": slug.current,
         type,
         description,
         projectUrl,
         repo,
         tags
       }
-    `
+    `;
 
     client
       .fetch(query, {
-        searchTerm: `${term}*`,
-        plainTerm: term,
+        searchTerm: `${trimmedTerm}*`,
       })
       .then((data) => {
-        setResults(data)
-        setIsOpen(true)
+        setResults(data || []);
       })
-      .catch(console.error)
-  }, [term])
+      .catch((error) => {
+        console.error(error);
+        setResults([]);
+      });
+  }, [trimmedTerm, hasSearchTerm]);
+
+  function getResultLink(item) {
+    if (item.slug) {
+      return `/projects#${item.slug}`;
+    }
+
+    return item.projectUrl || item.repo || "/projects";
+  }
+
+  function isExternalLink(item) {
+    return !item.slug && Boolean(item.projectUrl || item.repo);
+  }
 
   return (
     <div className="search-box">
@@ -50,41 +68,55 @@ export default function SearchBox() {
         type="search"
         placeholder="Search the site..."
         value={term}
-        onChange={(e) => setTerm(e.target.value)}
+        onChange={(event) => setTerm(event.target.value)}
         onFocus={() => setIsOpen(true)}
+        onBlur={() => {
+          window.setTimeout(() => {
+            setIsOpen(false);
+          }, 150);
+        }}
+        aria-label="Search projects"
       />
 
-      {isOpen && results.length > 0 && (
+      {isOpen && hasSearchTerm && results.length > 0 && (
         <div className="search-results">
-          {results.map((item) => (
-            <a
-              key={item.title}
-              href={item.projectUrl || item.repo || '#projects'}
-              className="search-result"
-              target={item.projectUrl || item.repo ? '_blank' : undefined}
-              rel="noreferrer"
-            >
-              <span className="search-result-type">{item.type}</span>
-              <strong>{item.title}</strong>
-              <p>{item.description}</p>
+          {results.map((item) => {
+            const external = isExternalLink(item);
 
-              {item.tags?.length > 0 && (
-                <div className="search-result-tags">
-                  {item.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-              )}
-            </a>
-          ))}
+            return (
+              <a
+                key={item._id}
+                href={getResultLink(item)}
+                className="search-result"
+                target={external ? "_blank" : undefined}
+                rel={external ? "noreferrer" : undefined}
+              >
+                {item.type && (
+                  <span className="search-result-type">{item.type}</span>
+                )}
+
+                <strong>{item.title}</strong>
+
+                {item.description && <p>{item.description}</p>}
+
+                {item.tags?.length > 0 && (
+                  <div className="search-result-tags">
+                    {item.tags.map((tag) => (
+                      <span key={tag}>{tag}</span>
+                    ))}
+                  </div>
+                )}
+              </a>
+            );
+          })}
         </div>
       )}
 
-      {isOpen && term.length >= 2 && results.length === 0 && (
+      {isOpen && hasSearchTerm && results.length === 0 && (
         <div className="search-results">
           <div className="search-empty">No results found.</div>
         </div>
       )}
     </div>
-  )
+  );
 }
