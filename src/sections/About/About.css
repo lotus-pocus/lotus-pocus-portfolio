@@ -71,6 +71,14 @@
   font-style: italic;
 }
 
+.about-site-note {
+  max-width: 700px;
+  margin-top: 2.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.65;
+}
+
 /* Mobile */
 
 @media (max-width: 800px) {

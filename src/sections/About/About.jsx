@@ -4,8 +4,8 @@ import "./About.css";
 function About() {
   return (
     <section className="about" id="about">
-      <div className="about-header">
-        <p className="about-kicker">About</p>
+      <div className="about-content">
+        <p className="section-kicker">About</p>
 
         <h2>
           Curious by nature.
@@ -70,18 +70,18 @@ function About() {
               </p>
 
               <ul>
-                <li>React & modern frontend development</li>
+                <li>React &amp; modern frontend development</li>
                 <li>Sanity CMS</li>
-                <li>UX & accessibility</li>
-                <li>SEO & performance optimisation</li>
-                <li>Creative technology & interactive experiences</li>
+                <li>UX &amp; accessibility</li>
+                <li>SEO &amp; performance optimisation</li>
+                <li>Creative technology &amp; interactive experiences</li>
                 <li>Continuous learning</li>
               </ul>
 
               <p>
                 <em>
                   The more I learn, the more I realise there is still to
-                  discover. 
+                  discover.
                   <br />
                   And that's exactly what keeps frontend development so
                   exciting.
@@ -90,6 +90,12 @@ function About() {
             </>
           }
         />
+
+        <p className="about-site-note">
+          I designed and built this portfolio in React, using Sanity as a
+          headless CMS to manage projects, case studies and site content, with
+          deployment through Vercel.
+        </p>
       </div>
     </section>
   );
