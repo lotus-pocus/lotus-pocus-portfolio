@@ -30,7 +30,7 @@
 /* Case study header */
 .project-case-header {
   width: 100%;
-  max-width: 760px;
+  max-width: none;
   margin: 0 0 3rem;
 }
 
@@ -70,14 +70,16 @@
 }
 
 .project-case-summary {
-  max-width: 720px;
+  width: 100%;
+  max-width: none;
   margin-bottom: 1rem;
   font-size: clamp(1.1rem, 1.5vw, 1.4rem);
   line-height: 1.6;
 }
 
 .project-intro {
-  max-width: 720px;
+  width: 100%;
+  max-width: none;
   font-size: clamp(1.05rem, 1.4vw, 1.25rem);
   line-height: 1.7;
   opacity: 0.82;

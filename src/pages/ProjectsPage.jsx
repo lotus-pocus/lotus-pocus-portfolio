@@ -37,22 +37,22 @@ function ProjectsPage() {
             }
           },
 
-          caseStudySections[] {
-            _key,
-            heading,
-            body,
-            imageLayout,
-
-            images[] {
-              _key,
-              alt,
-              caption,
-
-              asset-> {
-                url
-              }
-            }
-          },
+         caseStudySections[]{
+  _key,
+  heading,
+  body,
+  bodyRich,
+  imageLayout,
+  images[]{
+    _key,
+    alt,
+    caption,
+    linkUrl,
+    asset->{
+      url
+    }
+  }
+},
 
           challenge,
           challengeImages[] {
@@ -156,11 +156,7 @@ function ProjectsPage() {
           project.caseStudySections.length > 0;
 
         return (
-          <article
-            className="project-case"
-            id={project.slug}
-            key={project._id}
-          >
+          <article className="project-case" id={project.slug} key={project._id}>
             <div className="project-case-content">
               <header className="project-case-header">
                 {project.clientLogo?.asset?.url && (
@@ -227,6 +223,7 @@ function ProjectsPage() {
                     key={section._key}
                     title={section.heading}
                     text={section.body}
+                    richText={section.bodyRich}
                     images={section.images}
                     layout={section.imageLayout || "two-column"}
                   />

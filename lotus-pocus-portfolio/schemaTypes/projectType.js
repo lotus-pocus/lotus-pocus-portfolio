@@ -208,6 +208,55 @@ export default {
               rows: 6,
             },
             {
+              name: 'bodyRich',
+              title: 'Section Copy — Rich Text',
+              type: 'array',
+              description:
+                'Optional rich-text version of the section copy. Use this when you need inline links. If empty, the existing Section Copy will continue to be used.',
+              of: [
+                {
+                  type: 'block',
+                  styles: [
+                    {
+                      title: 'Normal',
+                      value: 'normal',
+                    },
+                  ],
+                  lists: [],
+                  marks: {
+                    decorators: [
+                      {
+                        title: 'Strong',
+                        value: 'strong',
+                      },
+                      {
+                        title: 'Emphasis',
+                        value: 'em',
+                      },
+                    ],
+                    annotations: [
+                      {
+                        name: 'link',
+                        title: 'Link',
+                        type: 'object',
+                        fields: [
+                          {
+                            name: 'href',
+                            title: 'URL',
+                            type: 'url',
+                            validation: (Rule) =>
+                              Rule.uri({
+                                scheme: ['http', 'https', 'mailto'],
+                              }),
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+            {
               name: 'images',
               title: 'Section Images',
               type: 'array',
@@ -229,6 +278,13 @@ export default {
                       title: 'Caption',
                       type: 'string',
                       description: 'Optional caption shown below the image.',
+                    },
+                    {
+                      name: 'linkUrl',
+                      title: 'Image Link',
+                      type: 'url',
+                      description:
+                        'Optional. If added, clicking the image will open this page in a new tab.',
                     },
                   ],
                 },

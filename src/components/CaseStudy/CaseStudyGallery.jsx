@@ -14,18 +14,53 @@ function CaseStudyGallery({
     <div className={`case-study-gallery ${layout}`}>
       {safeImages.map((image, index) => {
         const imageUrl = image?.asset?.url;
+        const imageKey =
+          image?._key || `${imageUrl}-${index}`;
 
         if (!imageUrl) {
           return null;
         }
 
-        return (
+        const imageElement = (
           <img
-            key={`${imageUrl}-${index}`}
             src={imageUrl}
-            alt={`Case study image ${index + 1}`}
+            alt={
+              image.alt ||
+              `Case study image ${index + 1}`
+            }
             loading="lazy"
           />
+        );
+
+        return (
+          <figure
+            className="case-study-gallery-item"
+            key={imageKey}
+          >
+            {image.linkUrl ? (
+              <a
+                href={image.linkUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="case-study-image-link"
+                aria-label={
+                  image.alt
+                    ? `Open ${image.alt}`
+                    : "Open related page"
+                }
+              >
+                {imageElement}
+              </a>
+            ) : (
+              imageElement
+            )}
+
+            {image.caption && (
+              <figcaption>
+                {image.caption}
+              </figcaption>
+            )}
+          </figure>
         );
       })}
     </div>

@@ -23,6 +23,22 @@
   cursor: zoom-in;
 }
 
+.case-study-image-link {
+  display: block;
+  cursor: pointer;
+}
+
+.case-study-image-link img {
+  transition:
+    transform 180ms ease,
+    opacity 180ms ease;
+}
+
+.case-study-image-link:hover img {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+
 @media (max-width: 800px) {
   .case-study-gallery.two-column,
   .case-study-gallery.gallery {
