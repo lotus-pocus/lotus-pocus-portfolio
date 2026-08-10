@@ -37,27 +37,26 @@ function ProjectsPage() {
             }
           },
 
-         caseStudySections[]{
-  _key,
-  heading,
-  body,
-  bodyRich,
-  imageLayout,
-  images[]{
-    _key,
-    alt,
-    caption,
-    linkUrl,
-    asset->{
-      url
-    }
-  }
-},
+          caseStudySections[]{
+            _key,
+            heading,
+            body,
+            bodyRich,
+            imageLayout,
+            images[]{
+              _key,
+              alt,
+              caption,
+              linkUrl,
+              asset->{
+                url
+              }
+            }
+          },
 
           challenge,
           challengeImages[] {
             _key,
-
             asset-> {
               url
             }
@@ -66,7 +65,6 @@ function ProjectsPage() {
           solution,
           solutionImages[] {
             _key,
-
             asset-> {
               url
             }
@@ -75,7 +73,6 @@ function ProjectsPage() {
           outcome,
           outcomeImages[] {
             _key,
-
             asset-> {
               url
             }
@@ -115,7 +112,7 @@ function ProjectsPage() {
 
     const slug = decodeURIComponent(window.location.hash.slice(1));
 
-    const scrollToProject = () => {
+    const scrollToProject = (behavior = "auto") => {
       const projectSection = document.getElementById(slug);
 
       if (!projectSection) {
@@ -129,14 +126,23 @@ function ProjectsPage() {
 
       window.scrollTo({
         top: Math.max(projectPosition - headerOffset, 0),
-        behavior: "smooth",
+        behavior,
       });
     };
 
-    const scrollTimeout = window.setTimeout(scrollToProject, 350);
+    // First scroll as soon as the project list has rendered.
+    const initialScroll = window.setTimeout(() => {
+      scrollToProject("auto");
+    }, 100);
+
+    // Correct the position once images/layout have had time to settle.
+    const correctionScroll = window.setTimeout(() => {
+      scrollToProject("smooth");
+    }, 1000);
 
     return () => {
-      window.clearTimeout(scrollTimeout);
+      window.clearTimeout(initialScroll);
+      window.clearTimeout(correctionScroll);
     };
   }, [projects]);
 
@@ -156,7 +162,11 @@ function ProjectsPage() {
           project.caseStudySections.length > 0;
 
         return (
-          <article className="project-case" id={project.slug} key={project._id}>
+          <article
+            className="project-case"
+            id={project.slug}
+            key={project._id}
+          >
             <div className="project-case-content">
               <header className="project-case-header">
                 {project.clientLogo?.asset?.url && (
@@ -170,7 +180,9 @@ function ProjectsPage() {
                 )}
 
                 {project.type && (
-                  <p className="project-case-type">{project.type}</p>
+                  <p className="project-case-type">
+                    {project.type}
+                  </p>
                 )}
 
                 <h2>{project.title}</h2>
