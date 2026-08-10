@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { client } from "../sanityClient";
 import { CaseStudySection } from "../components/CaseStudy";
 import "./ProjectsPage.css";
@@ -7,11 +8,16 @@ function ProjectsPage() {
   const [projects, setProjects] = useState([]);
   const [siteSettings, setSiteSettings] = useState(null);
 
+  const location = useLocation();
+
   useEffect(() => {
     client
       .fetch(
         `
-        *[_type == "project" && !(_id in path("versions.**"))]
+        *[
+          _type == "project" &&
+          !(_id in path("versions.**"))
+        ]
         | order(coalesce(displayOrder, 9999) asc, title asc) {
           _id,
           title,
@@ -37,24 +43,27 @@ function ProjectsPage() {
             }
           },
 
-         caseStudySections[]{
-  _key,
-  heading,
-  body,
-  bodyRich,
-  imageLayout,
-  images[]{
-    _key,
-    alt,
-    caption,
-    linkUrl,
-    asset->{
-      url
-    }
-  }
-},
+          caseStudySections[] {
+            _key,
+            heading,
+            body,
+            bodyRich,
+            imageLayout,
+
+            images[] {
+              _key,
+              alt,
+              caption,
+              linkUrl,
+
+              asset-> {
+                url
+              }
+            }
+          },
 
           challenge,
+
           challengeImages[] {
             _key,
 
@@ -64,6 +73,7 @@ function ProjectsPage() {
           },
 
           solution,
+
           solutionImages[] {
             _key,
 
@@ -73,6 +83,7 @@ function ProjectsPage() {
           },
 
           outcome,
+
           outcomeImages[] {
             _key,
 
@@ -109,23 +120,27 @@ function ProjectsPage() {
   }, []);
 
   useEffect(() => {
-    if (projects.length === 0 || !window.location.hash) {
+    if (projects.length === 0 || !location.hash) {
       return;
     }
 
-    const slug = decodeURIComponent(window.location.hash.slice(1));
+    const slug = decodeURIComponent(
+      location.hash.replace("#", ""),
+    );
 
     const scrollToProject = () => {
       const projectSection = document.getElementById(slug);
 
       if (!projectSection) {
+        console.warn(`Project section not found for slug: ${slug}`);
         return;
       }
 
       const headerOffset = 40;
 
       const projectPosition =
-        projectSection.getBoundingClientRect().top + window.scrollY;
+        projectSection.getBoundingClientRect().top +
+        window.scrollY;
 
       window.scrollTo({
         top: Math.max(projectPosition - headerOffset, 0),
@@ -133,19 +148,26 @@ function ProjectsPage() {
       });
     };
 
-    const scrollTimeout = window.setTimeout(scrollToProject, 350);
+    /*
+      Wait until React has rendered the project content
+      before calculating its position on the page.
+    */
+    const firstFrame = requestAnimationFrame(() => {
+      requestAnimationFrame(scrollToProject);
+    });
 
     return () => {
-      window.clearTimeout(scrollTimeout);
+      cancelAnimationFrame(firstFrame);
     };
-  }, [projects]);
+  }, [projects, location.hash]);
 
   return (
     <main
       className="projects-page"
       style={{
         backgroundColor:
-          siteSettings?.projectsPageBackgroundColor?.hex || "#050505",
+          siteSettings?.projectsPageBackgroundColor?.hex ||
+          "#050505",
       }}
     >
       <h1>Projects</h1>
@@ -156,7 +178,11 @@ function ProjectsPage() {
           project.caseStudySections.length > 0;
 
         return (
-          <article className="project-case" id={project.slug} key={project._id}>
+          <article
+            className="project-case"
+            id={project.slug}
+            key={project._id}
+          >
             <div className="project-case-content">
               <header className="project-case-header">
                 {project.clientLogo?.asset?.url && (
@@ -170,7 +196,9 @@ function ProjectsPage() {
                 )}
 
                 {project.type && (
-                  <p className="project-case-type">{project.type}</p>
+                  <p className="project-case-type">
+                    {project.type}
+                  </p>
                 )}
 
                 <h2>{project.title}</h2>
@@ -181,9 +209,11 @@ function ProjectsPage() {
                   </p>
                 )}
 
-                {(project.caseStudyIntro || project.description) && (
+                {(project.caseStudyIntro ||
+                  project.description) && (
                   <p className="project-intro">
-                    {project.caseStudyIntro || project.description}
+                    {project.caseStudyIntro ||
+                      project.description}
                   </p>
                 )}
 
@@ -225,7 +255,9 @@ function ProjectsPage() {
                     text={section.body}
                     richText={section.bodyRich}
                     images={section.images}
-                    layout={section.imageLayout || "two-column"}
+                    layout={
+                      section.imageLayout || "two-column"
+                    }
                   />
                 ))
               ) : (
