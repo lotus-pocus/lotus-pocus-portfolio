@@ -1,23 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import "./ProjectCarousel.css";
-
-const DRAG_THRESHOLD = 8;
 
 function ProjectCarousel({
   projects,
-  selectedSkills = [],
+  selectedSkills,
   onToggleSkill,
 }) {
   const carouselRef = useRef(null);
-
   const [isDragging, setIsDragging] = useState(false);
-
-  const dragStartRef = useRef({
-    x: 0,
-    scrollLeft: 0,
-    hasMoved: false,
-  });
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   useEffect(() => {
     if (!carouselRef.current) return;
@@ -53,71 +45,33 @@ function ProjectCarousel({
   const handleMouseDown = (event) => {
     if (!carouselRef.current) return;
 
-    /*
-      Links and buttons should behave normally and should
-      never initiate carousel dragging.
-    */
     if (event.target.closest("a, button")) {
       return;
     }
 
-    dragStartRef.current = {
-      x: event.pageX,
-      scrollLeft: carouselRef.current.scrollLeft,
-      hasMoved: false,
-    };
+    setIsDragging(true);
+    setStartX(event.pageX - carouselRef.current.offsetLeft);
+    setScrollLeft(carouselRef.current.scrollLeft);
   };
 
   const handleMouseMove = (event) => {
-    if (!carouselRef.current) return;
-
-    const distance =
-      event.pageX - dragStartRef.current.x;
-
-    /*
-      Ignore tiny pointer movements.
-
-      A normal click often includes a few pixels of movement,
-      so we don't treat it as a drag until the user has moved
-      at least DRAG_THRESHOLD pixels.
-    */
-    if (
-      !dragStartRef.current.hasMoved &&
-      Math.abs(distance) < DRAG_THRESHOLD
-    ) {
-      return;
-    }
-
-    dragStartRef.current.hasMoved = true;
-
-    if (!isDragging) {
-      setIsDragging(true);
-    }
+    if (!isDragging || !carouselRef.current) return;
 
     event.preventDefault();
 
-    const walk = distance * 1.3;
+    const x = event.pageX - carouselRef.current.offsetLeft;
+    const walk = (x - startX) * 1.3;
 
-    carouselRef.current.scrollLeft =
-      dragStartRef.current.scrollLeft - walk;
+    carouselRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const stopDragging = () => {
     setIsDragging(false);
-
-    dragStartRef.current = {
-      x: 0,
-      scrollLeft: 0,
-      hasMoved: false,
-    };
   };
 
   const handleSkillClick = (event, tag) => {
     event.stopPropagation();
-
-    if (onToggleSkill) {
-      onToggleSkill(tag);
-    }
+    onToggleSkill(tag);
   };
 
   if (!projects?.length) return null;
@@ -169,9 +123,7 @@ function ProjectCarousel({
                 color: textColor,
               }}
             >
-              <p className="project-type">
-                {project.type}
-              </p>
+              <p className="project-type">{project.type}</p>
 
               <h3>{project.title}</h3>
 
@@ -190,9 +142,7 @@ function ProjectCarousel({
                       <button
                         key={tag}
                         type="button"
-                        className={
-                          isActive ? "active" : ""
-                        }
+                        className={isActive ? "active" : ""}
                         onClick={(event) =>
                           handleSkillClick(event, tag)
                         }
@@ -215,15 +165,15 @@ function ProjectCarousel({
 
               <div className="project-links">
                 {project.slug && (
-                  <Link
-                    to={`/projects#${project.slug}`}
+                  <a
+                    href={`/projects#${project.slug}`}
                     onMouseDown={(event) =>
                       event.stopPropagation()
                     }
                     aria-label={`View case study for ${project.title}`}
                   >
                     Case study →
-                  </Link>
+                  </a>
                 )}
 
                 {project.projectUrl && (
