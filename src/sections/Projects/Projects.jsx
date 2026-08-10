@@ -72,18 +72,14 @@ function Projects() {
 
   const filteredProjects = selectedSkills.length
     ? sanityProjects.filter((project) =>
-        selectedSkills.every((skill) =>
-          project.tags?.includes(skill),
-        ),
+        selectedSkills.every((skill) => project.tags?.includes(skill)),
       )
     : sanityProjects;
 
   function toggleSkill(skill) {
     setSelectedSkills((currentSkills) =>
       currentSkills.includes(skill)
-        ? currentSkills.filter(
-            (currentSkill) => currentSkill !== skill,
-          )
+        ? currentSkills.filter((currentSkill) => currentSkill !== skill)
         : [...currentSkills, skill],
     );
   }
@@ -136,14 +132,13 @@ function Projects() {
 
       {siteSettings?.ContactCTA && siteSettings?.ContactCTAButtonLabel && (
         <div className="projects-cta">
+          <p className="projects-availability">
+            Available for freelance projects and new opportunities.
+          </p>
+
           <p>{siteSettings.ContactCTA}</p>
 
-          <a
-            href={`mailto:${siteSettings.contactEmail}`}
-            className="projects-cta-button"
-          >
-            {siteSettings.ContactCTAButtonLabel}
-          </a>
+          <a href="mailto:lotusetay@gmail.com">lotusetay@gmail.com ↗</a>
         </div>
       )}
     </section>

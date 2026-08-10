@@ -1,0 +1,29 @@
+.cookie-settings-button {
+  appearance: none;
+  padding: 0;
+  margin: 0;
+
+  background: none;
+  color: inherit;
+  border: 0;
+
+  font: inherit;
+  font-size: 0.8rem;
+
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  opacity: 0.65;
+  cursor: pointer;
+
+  transition: opacity 0.2s ease;
+}
+
+.cookie-settings-button:hover {
+  opacity: 1;
+}
+
+.cookie-settings-button:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}

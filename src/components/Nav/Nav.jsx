@@ -7,7 +7,7 @@ export default function Nav() {
       <a href="/projects">Projects</a>
       <a href="/Learnings">Learnings</a>
       <a href="/#about">About</a>
-      <a href="/#contact">Contact</a>
+      <a href="mailto:lotusetay@gmail.com">Contact</a>
     </nav>
   )
 }
