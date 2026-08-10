@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import "./CookieConsent.css";
 
+import {
+  loadGoogleAnalytics,
+  denyGoogleAnalytics,
+} from "../../utils/analytics";
+
 const CONSENT_KEY = "lotus-pocus-analytics-consent";
 
 function CookieConsent() {
@@ -40,10 +45,12 @@ function CookieConsent() {
 
   function acceptAnalytics() {
     saveConsent("granted");
+    loadGoogleAnalytics();
   }
 
   function rejectAnalytics() {
     saveConsent("denied");
+    denyGoogleAnalytics();
   }
 
   if (!showBanner) {
