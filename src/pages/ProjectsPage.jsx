@@ -27,13 +27,27 @@ function ProjectsPage() {
 
           clientLogo {
             asset-> {
-              url
+              url,
+              metadata {
+                dimensions {
+                  width,
+                  height,
+                  aspectRatio
+                }
+              }
             }
           },
 
           mainImage {
             asset-> {
-              url
+              url,
+              metadata {
+                dimensions {
+                  width,
+                  height,
+                  aspectRatio
+                }
+              }
             }
           },
 
@@ -49,7 +63,14 @@ function ProjectsPage() {
               caption,
               linkUrl,
               asset->{
-                url
+                url,
+                metadata {
+                  dimensions {
+                    width,
+                    height,
+                    aspectRatio
+                  }
+                }
               }
             }
           },
@@ -58,7 +79,14 @@ function ProjectsPage() {
           challengeImages[] {
             _key,
             asset-> {
-              url
+              url,
+              metadata {
+                dimensions {
+                  width,
+                  height,
+                  aspectRatio
+                }
+              }
             }
           },
 
@@ -66,7 +94,14 @@ function ProjectsPage() {
           solutionImages[] {
             _key,
             asset-> {
-              url
+              url,
+              metadata {
+                dimensions {
+                  width,
+                  height,
+                  aspectRatio
+                }
+              }
             }
           },
 
@@ -74,7 +109,14 @@ function ProjectsPage() {
           outcomeImages[] {
             _key,
             asset-> {
-              url
+              url,
+              metadata {
+                dimensions {
+                  width,
+                  height,
+                  aspectRatio
+                }
+              }
             }
           }
         }
@@ -112,38 +154,21 @@ function ProjectsPage() {
 
     const slug = decodeURIComponent(window.location.hash.slice(1));
 
-    const scrollToProject = (behavior = "auto") => {
-      const projectSection = document.getElementById(slug);
+    const projectSection = document.getElementById(slug);
 
-      if (!projectSection) {
-        return;
-      }
+    if (!projectSection) {
+      return;
+    }
 
-      const headerOffset = 40;
+    const headerOffset = 40;
 
-      const projectPosition =
-        projectSection.getBoundingClientRect().top + window.scrollY;
+    const projectPosition =
+      projectSection.getBoundingClientRect().top + window.scrollY;
 
-      window.scrollTo({
-        top: Math.max(projectPosition - headerOffset, 0),
-        behavior,
-      });
-    };
-
-    // First scroll as soon as the project list has rendered.
-    const initialScroll = window.setTimeout(() => {
-      scrollToProject("auto");
-    }, 100);
-
-    // Correct the position once images/layout have had time to settle.
-    const correctionScroll = window.setTimeout(() => {
-      scrollToProject("smooth");
-    }, 1000);
-
-    return () => {
-      window.clearTimeout(initialScroll);
-      window.clearTimeout(correctionScroll);
-    };
+    window.scrollTo({
+      top: Math.max(projectPosition - headerOffset, 0),
+      behavior: "auto",
+    });
   }, [projects]);
 
   return (
@@ -161,6 +186,9 @@ function ProjectsPage() {
           Array.isArray(project.caseStudySections) &&
           project.caseStudySections.length > 0;
 
+        const mainImageDimensions =
+          project.mainImage?.asset?.metadata?.dimensions;
+
         return (
           <article
             className="project-case"
@@ -175,6 +203,12 @@ function ProjectsPage() {
                       className="project-brand-logo"
                       src={project.clientLogo.asset.url}
                       alt={`${project.title} logo`}
+                      width={
+                        project.clientLogo.asset.metadata?.dimensions?.width
+                      }
+                      height={
+                        project.clientLogo.asset.metadata?.dimensions?.height
+                      }
                     />
                   </div>
                 )}
@@ -224,6 +258,8 @@ function ProjectsPage() {
                   <img
                     src={project.mainImage.asset.url}
                     alt={`${project.title} website overview`}
+                    width={mainImageDimensions?.width}
+                    height={mainImageDimensions?.height}
                     loading="lazy"
                   />
                 </div>

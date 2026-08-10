@@ -14,8 +14,12 @@ function CaseStudyGallery({
     <div className={`case-study-gallery ${layout}`}>
       {safeImages.map((image, index) => {
         const imageUrl = image?.asset?.url;
+
         const imageKey =
           image?._key || `${imageUrl}-${index}`;
+
+        const dimensions =
+          image?.asset?.metadata?.dimensions;
 
         if (!imageUrl) {
           return null;
@@ -28,6 +32,8 @@ function CaseStudyGallery({
               image.alt ||
               `Case study image ${index + 1}`
             }
+            width={dimensions?.width}
+            height={dimensions?.height}
             loading="lazy"
           />
         );
