@@ -25,16 +25,19 @@ function PrivacyPage() {
           <h2>Analytics</h2>
 
           <p>
-            I use Google Analytics to understand how visitors use
-            this website, for example which pages are visited and
-            how people arrive at the site. I use this information
-            to understand site performance and improve the
-            portfolio.
+            I use Google Analytics and Microsoft Clarity to
+            understand how visitors use this website and to help
+            me improve its content, usability and performance.
           </p>
 
           <p>
-            Google Analytics is only activated if you choose
-            to accept analytics cookies.
+            Google Analytics provides information such as page
+            views, traffic sources and engagement. Microsoft Clarity provides behavioural insights such as heatmaps, scroll behaviour and session recordings with sensitive content masked, helping me understand how people interact with the site and identify usability issues.
+          </p>
+
+          <p>
+            Analytics cookies are only used if you choose to
+            accept analytics.
           </p>
         </section>
 
@@ -42,8 +45,9 @@ function PrivacyPage() {
           <h2>Cookies</h2>
 
           <p>
-            If you accept analytics, Google Analytics may use
-            cookies to help measure website usage.
+            If you accept analytics, Google Analytics and
+            Microsoft Clarity may use cookies to help measure
+            website usage and interaction.
           </p>
 
           <p>
@@ -68,8 +72,9 @@ function PrivacyPage() {
 
           <p>
             This website is hosted using Vercel and uses Sanity
-            to manage website content. Google Analytics is used
-            for website analytics where consent has been given.
+            to manage website content. Google Analytics and
+            Microsoft Clarity are used for website analytics
+            where consent has been given.
           </p>
         </section>
 

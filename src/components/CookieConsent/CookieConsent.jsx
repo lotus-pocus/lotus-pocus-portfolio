@@ -6,6 +6,8 @@ import {
   denyGoogleAnalytics,
 } from "../../utils/analytics";
 
+import { loadClarity, denyClarity } from "../../utils/clarity";
+
 const CONSENT_KEY = "lotus-pocus-analytics-consent";
 
 function CookieConsent() {
@@ -19,10 +21,7 @@ function CookieConsent() {
       setShowBanner(true);
     }
 
-    window.addEventListener(
-      "open-cookie-settings",
-      handleOpenCookieSettings,
-    );
+    window.addEventListener("open-cookie-settings", handleOpenCookieSettings);
 
     return () => {
       window.removeEventListener(
@@ -45,12 +44,16 @@ function CookieConsent() {
 
   function acceptAnalytics() {
     saveConsent("granted");
+
     loadGoogleAnalytics();
+    loadClarity();
   }
 
   function rejectAnalytics() {
     saveConsent("denied");
+
     denyGoogleAnalytics();
+    denyClarity();
   }
 
   if (!showBanner) {
@@ -64,20 +67,13 @@ function CookieConsent() {
     >
       <div className="cookie-consent__content">
         <div className="cookie-consent__text">
-          <p className="cookie-consent__title">
-            Cookies & analytics
-          </p>
+          <p className="cookie-consent__title">Cookies & analytics</p>
 
           <p>
-            I use Google Analytics to understand how people use
-            my portfolio and to help me improve the site.
-            Analytics cookies are only used with your permission.
+            I use Google Analytics and Microsoft Clarity to understand how people use my portfolio and to help me improve the site. Analytics cookies are only used with your permission.
           </p>
 
-          <a
-            className="cookie-consent__link"
-            href="/privacy"
-          >
+          <a className="cookie-consent__link" href="/privacy">
             Privacy & cookies
           </a>
         </div>
