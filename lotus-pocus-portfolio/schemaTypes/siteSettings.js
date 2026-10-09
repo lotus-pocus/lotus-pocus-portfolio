@@ -12,6 +12,24 @@ export default {
     {name: 'linkedinUrl', title: 'LinkedIn URL', type: 'url'},
     {name: 'instagramUrl', title: 'Instagram URL', type: 'url'},
 
+    {
+      name: 'featuredLinkLabel',
+      title: 'Featured Link Label',
+      type: 'string',
+      description: 'Text displayed in the featured link on the homepage',
+    },
+    {
+      name: 'featuredLinkUrl',
+      title: 'Featured Link URL',
+      type: 'url',
+    },
+    {
+      name: 'showFeaturedLink',
+      title: 'Show Featured Link',
+      type: 'boolean',
+      initialValue: false,
+    },
+
     {name: 'footerText', title: 'Footer Text', type: 'string'},
     {
       name: 'heroHeading',

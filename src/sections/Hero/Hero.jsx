@@ -15,6 +15,9 @@ function Hero() {
           githubUrl,
           linkedinUrl,
           instagramUrl,
+          featuredLinkLabel,
+          featuredLinkUrl,
+          showFeaturedLink,
           heroHeading,
           heroDescription,
           heroImage{
@@ -49,15 +52,11 @@ function Hero() {
     >
       <div className="hero-content">
         <div className="hero-text">
-          <p className="hero-tag">
-            {siteSettings?.siteTitle || "LOTUS POCUS"}
-          </p>
+          <p className="hero-tag">{siteSettings?.siteTitle || "LOTUS POCUS"}</p>
 
           <h1>{siteSettings?.heroHeading}</h1>
 
-          <p className="hero-description">
-            {siteSettings?.heroDescription}
-          </p>
+          <p className="hero-description">{siteSettings?.heroDescription}</p>
 
           <div className="hero-links">
             {siteSettings?.githubUrl && (
@@ -77,6 +76,18 @@ function Hero() {
             )}
 
             <a href="#projects">Projects</a>
+
+            {siteSettings?.showFeaturedLink &&
+              siteSettings?.featuredLinkUrl && (
+                <a
+                  href={siteSettings.featuredLinkUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hero-featured-link"
+                >
+                  {siteSettings.featuredLinkLabel || "Play Grown on Trees"}
+                </a>
+              )}
           </div>
         </div>
 

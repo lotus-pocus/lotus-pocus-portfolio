@@ -53,7 +53,9 @@
 
 .hero-links {
   display: flex;
-  gap: 1.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
 }
 
 .hero-links a {
@@ -126,6 +128,54 @@
     rgba(0,0,0,1),
     rgba(0,0,0,0)
   );
+}
+
+/* Featured project pin */
+
+.hero-links .hero-featured-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+
+  background: #dfff00;
+  color: #111;
+
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+/* Override the underline used by normal hero links */
+.hero-links .hero-featured-link::after {
+  display: none;
+}
+
+.hero-featured-pin {
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.hero-links .hero-featured-link:hover {
+  background: #efff75;
+  transform: translateY(-2px);
+}
+
+.hero-links .hero-featured-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-links .hero-featured-link {
+    transition: none;
+  }
 }
 
 /* Mobile */

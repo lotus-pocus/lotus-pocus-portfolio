@@ -14,12 +14,14 @@ import ProjectsPage from "./pages/ProjectsPage";
 import LearningsPage from "./pages/LearningsPage";
 
 import About from "./sections/About/About";
+import FeaturedProject from "./sections/FeaturedProject/FeaturedProject";
 
 function Home() {
   return (
     <>
       <Hero />
       <ClientWork />
+      <FeaturedProject />
       <Projects />
       <About />
       
