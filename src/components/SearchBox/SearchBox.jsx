@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { client } from "../../sanityClient";
 import "./SearchBox.css";
 
@@ -82,14 +83,21 @@ export default function SearchBox() {
         <div className="search-results">
           {results.map((item) => {
             const external = isExternalLink(item);
+            const ResultLink = external ? "a" : Link;
 
             return (
-              <a
+              <ResultLink
                 key={item._id}
-                href={getResultLink(item)}
+                {...(external
+                  ? { href: getResultLink(item) }
+                  : { to: getResultLink(item) })}
                 className="search-result"
                 target={external ? "_blank" : undefined}
                 rel={external ? "noreferrer" : undefined}
+                onClick={() => {
+                  setTerm("");
+                  setIsOpen(false);
+                }}
               >
                 {item.type && (
                   <span className="search-result-type">{item.type}</span>
@@ -106,7 +114,7 @@ export default function SearchBox() {
                     ))}
                   </div>
                 )}
-              </a>
+              </ResultLink>
             );
           })}
         </div>

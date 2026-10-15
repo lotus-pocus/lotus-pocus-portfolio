@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { client } from "../sanityClient";
 import { CaseStudySection } from "../components/CaseStudy";
 import "./ProjectsPage.css";
 
 function ProjectsPage() {
+  const location = useLocation();
   const [projects, setProjects] = useState([]);
   const [siteSettings, setSiteSettings] = useState(null);
 
@@ -148,11 +150,11 @@ function ProjectsPage() {
   }, []);
 
   useEffect(() => {
-    if (projects.length === 0 || !window.location.hash) {
+    if (projects.length === 0 || !location.hash) {
       return;
     }
 
-    const slug = decodeURIComponent(window.location.hash.slice(1));
+    const slug = decodeURIComponent(location.hash.slice(1));
 
     const projectSection = document.getElementById(slug);
 
@@ -169,7 +171,7 @@ function ProjectsPage() {
       top: Math.max(projectPosition - headerOffset, 0),
       behavior: "auto",
     });
-  }, [projects]);
+  }, [location.hash, projects]);
 
   return (
     <main
